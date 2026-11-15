@@ -392,6 +392,60 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   .tuner-controls .field:first-child{grid-column:auto}
 }
 
+
+/* V3.1: keep the top navigation inside the same content width as the app */
+@media (max-width: 680px) {
+  header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 9px;
+  }
+  .brand {
+    width: 100%;
+    min-width: 0;
+  }
+  .header-right {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+  }
+  .header-right > * {
+    max-width: 100%;
+  }
+  .header-nav, .pro-header-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 8px;
+  }
+  .help-open-btn {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+  .language-control {
+    margin-left: auto;
+  }
+}
+@media (max-width: 390px) {
+  .header-right {
+    justify-content: space-between;
+  }
+  .header-nav, .pro-header-btn {
+    flex: 1 1 calc(33.333% - 6px);
+    min-width: 0;
+  }
+  .language-control {
+    margin-left: 0;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -998,3 +1052,1369 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       helpTitle:"КАК ПОЛЬЗОВАТЬСЯ МЕТРОНОМОМ",
       helpIntro:"Метроном помогает заниматься музыкой в постоянном темпе и с ровными долями.",
       helpBpm:"Настройте темп: используйте ползунок, кнопки +/− или введите число BPM.",
+      helpMeter:"Выберите размер: в размере 4/4 каждый такт состоит из четырёх долей. Верхнее число показывает количество долей, нижнее — длительность доли.",
+      helpNote:"Выберите деление: по умолчанию установлено 1/4. Выберите 1/8, триоль или 1/16, чтобы разделить основную долю на равные части.",
+      helpStart:"Запуск: нажмите кнопку Play. Маятник начнёт двигаться, появятся звуковые удары и индикаторы долей. Первая доля выделяется.",
+      helpSound:"Настройте звук: выберите тембр и громкость. Кнопка проверки позволяет прослушать звук.",
+      helpTap:"Задайте темп касаниями: несколько раз коснитесь кнопки в ровном ритме. Метроном рассчитает среднее значение BPM.",
+      helpRamp:"Тренировка темпа: включите постепенное изменение, выберите ускорение или замедление, число тактов и шаг изменения BPM.",
+      helpPreset:"Сохраните темп: введите название и сохраните настройку. Позже можно вернуть её одним касанием.",
+      helpTip:"Совет: начните с комфортного медленного темпа. Когда доли станут ровными, постепенно увеличивайте скорость.",
+      footer:"ROCKJAZZ ПРОФЕССИОНАЛЬНЫЙ МЕТРОНОМ • ТОЧНОСТЬ • РИТМ • МУЗЫКАЛЬНОСТЬ",
+      meterQuarter:"ЧЕТВЕРТЬ",meterEighth:"ВОСЬМАЯ",meterTriplet:"ТРИОЛЬ",meterSixteenth:"ШЕСТНАДЦАТАЯ",
+      ready:"ГОТОВ",playing:"РАБОТАЕТ",stopped:"Остановлено",tapAgain:"Продолжайте касаться в ровном ритме.",
+      tapSet:"Темп по касаниям: {bpm} BPM",soundTestError:"Ошибка проверки звука: ",startError:"Не удалось запустить звук: ",
+      needPresetName:"Сначала введите название для сохранения темпа.",playingText:"Играет • {bpm} BPM • {term}",
+      savePresetButton:"+ СОХРАНИТЬ ТЕМП",
+      brandSubtitle:"ПРОФЕССИОНАЛЬНЫЙ МЕТРОНОМ",versionLabel:"V2.6 • СТУДИЯ",instrumentAria:"Деревянный механический метроном с движущимся маятником",beatsAria:"Доли такта",
+      rhythmTitle:"НАСТРОЙКИ РИТМА",soundTitle:"НАСТРОЙКИ ЗВУКА",rampTitle:"ТРЕНИРОВКА ТЕМПА",presetTitle:"СОХРАНЁННЫЕ ТЕМПЫ",
+      helpButton:"КАК ПОЛЬЗОВАТЬСЯ?",guideLabel:"РУКОВОДСТВО",closeGuide:"Закрыть руководство",
+      presetApply:"ПРИМЕНИТЬ",presetDelete:"УДАЛИТЬ",presetEmpty:"Вы ещё не сохранили свой темп.",
+      presetSaved:"Темп «{name}» сохранён на {bpm} BPM и выбран.",
+      presetApplied:"Выбран темп «{name}» • Метроном установлен на {bpm} BPM.",
+      presetDeleted:"Сохранённый темп удалён.",builtinPresets:"ГОТОВЫЕ ТЕМПЫ"
+    }
+  };
+
+  const termDescriptions = {
+    Larghissimo:["Çok, çok yavaş","Very, very slow","Очень-очень медленно"],
+    Grave:["Ağır ve ciddi","Very slow and solemn","Очень медленно и торжественно"],
+    Largo:["Geniş ve çok yavaş","Broad and very slow","Широко и очень медленно"],
+    Lento:["Yavaşça","Slowly","Медленно"],
+    Adagio:["Yavaş ve rahat","Slow and relaxed","Медленно и спокойно"],
+    Adagietto:["Adagio'dan biraz daha hızlı","A little faster than Adagio","Немного быстрее Adagio"],
+    Andante:["Sakince, yürüyüş temposunda","At a walking pace","В умеренном, шаговом темпе"],
+    Moderato:["Orta hızda","At a moderate speed","Умеренно"],
+    Allegretto:["Orta derecede hızlı","Moderately fast","Умеренно быстро"],
+    Allegro:["Hızlı, neşeli ve canlı","Fast, cheerful and lively","Быстро, радостно и оживлённо"],
+    Vivace:["Canlı ve hızlı","Lively and fast","Живо и быстро"],
+    Presto:["Çok hızlı","Very fast","Очень быстро"],
+    Prestissimo:["Olabildiğince hızlı","As fast as possible","Максимально быстро"]
+  };
+
+
+  Object.assign(translations.tr, {
+    navMetronome:"METRONOM",navTuner:"AKORT",navPro:"PRO'YU KEŞFET",
+    adLabel:"REKLAM",adText:"Ücretsiz sürümü destekleyen sınırlı reklam alanı",
+    tunerKicker:"ROCKJAZZ AKORT STÜDYOSU",tunerHeading:"Kromatik Akort Cihazı",
+    tunerIntro:"Gitar, keman, ukulele ve bağlamanı mikrofonla akort et. Ses cihazında işlenir.",
+    tunerInstrument:"ENSTRÜMAN",instrumentGuitar:"Gitar",instrumentViolin:"Keman",instrumentUkulele:"Ukulele",instrumentBaglama:"Bağlama",
+    baglamaSap:"BAĞLAMA TÜRÜ",baglamaLong:"Uzun sap",baglamaShort:"Kısa sap",tunerProfile:"AKORT DÜZENİ",
+    chromaticMode:"KROMATİK",stringMode:"TEL HEDEFİ",detectedNote:"ALGILANAN NOTA",
+    tunerWaiting:"Akort ekranı açılınca otomatik dinleme başlar. Bir teli tek başına çalın.",targetNote:"HEDEF NOTA",
+    startTuner:"OTOMATİK DİNLEME",stopTuner:"DURDUR",
+    tunerPrivacy:"Mikrofon sesi kaydedilmez veya internete gönderilmez; analiz bu cihazda yapılır.",
+    tunerProTools:"PRO AKORT ARAÇLARI",referencePitch:"Referans frekansı",referencePitchHelp:"La4 için 432–446 Hz aralığı",
+    referenceTone:"Referans nota sesi",referenceToneHelp:"Seçilen telin sesini dinleyerek akort et",
+    noiseFilter:"Gelişmiş gürültü filtresi",noiseFilterHelp:"Ortam sesini azaltmaya yardımcı olur",
+    strobeMode:"Stroboskop görünümü",strobeHelp:"İnce akort için hareketli hassas gösterge",
+    listen:"DİNLE",enable:"AÇ",unlockTunerTools:"TÜM PRO AKORT ARAÇLARINI AÇ",
+    freeVsProTuner:"FREE / PRO AKORT",freeTunerCopy:"Ücretsiz sürümde kromatik akort ve dört enstrümanın standart akortları açık.",
+    proTunerBenefit1:"Bağlama için farklı düzenler",proTunerBenefit2:"Gitar ve ukulele alternatif akortları",
+    proTunerBenefit3:"Referans tonu ve hassas frekans kalibrasyonu",proTunerBenefit4:"Gürültü filtresi ve stroboskop",
+    seeProPlans:"PRO PLANLARINI GÖR",upgradeTitle:"RockJazz Pro'ya geç",upgradeSubtitle:"Metronom ve akort stüdyosunun tüm gücünü aç.",
+    upgradeBenefit1:"Sınırsız tempo kaydı ve gelişmiş ritim araçları",
+    upgradeBenefit2:"Bağlama düzenleri ve alternatif enstrüman akortları",
+    upgradeBenefit3:"Referans sesi, kalibrasyon, filtre ve stroboskop",
+    upgradeBenefit4:"Düzenli yeni çalışma programları ve reklamsız kullanım",
+    monthlyPlan:"AYLIK",yearlyPlan:"YILLIK",monthlyRenewal:"Her ay otomatik yenilenir",
+    yearlyRenewal:"Yılda bir yenilenir • Daha avantajlı",bestValue:"EN AVANTAJLI",
+    selectedYearPlan:"Yıllık plan seçildi: 399,99 TL / yıl.",
+    selectedMonthPlan:"Aylık plan seçildi: 49,99 TL / ay.",
+    purchaseContinue:"SATIN ALMAYA DEVAM ET",restorePurchases:"Satın alımları geri yükle",
+    billingDisclosure:"Üyelik otomatik yenilenir. Ücret, satın alma onayında gösterilir. Yenileme tarihinden önce Google Play üzerinden iptal edilebilir.",
+    prototypeNote:"Bu HTML prototipinde gerçek ödeme alınmaz. Satın alma Android sürümünde Google Play Faturalandırma ile bağlanacaktır.",
+    demoPro:"PRO ÖZELLİKLERİNİ DEMO OLARAK ÖNİZLE",disableDemoPro:"DEMO PRO ERİŞİMİNİ KAPAT",
+    tunerPermission:"Mikrofon izni verilmedi. Tarayıcı ayarlarından mikrofon erişimine izin verin.",
+    tunerSecure:"Mikrofon için güvenli bağlantı gerekir. Dosyayı HTTPS üzerinden veya Android uygulamasında açın.",
+    tunerNoSignal:"Ses bekleniyor… Bir teli tek başına çalın.",tunerListening:"Otomatik dinleme açık • Bir teli tek başına çalın.",
+    tunerInTune:"AKORTTA",tunerFlat:"PESTE • Teli biraz sıkın",tunerSharp:"TİZ • Teli biraz gevşetin",
+    tunerMicStartError:"Mikrofon başlatılamadı: ",tunerTargetLabel:"En yakın tel",
+    tunerTargetManual:"Seçilen tel",tunerFlatShort:"PESTE",tunerSharpShort:"TİZ",
+    presetLimitPro:"Ücretsiz sürümde en fazla 3 özel tempo kaydedebilirsiniz. Sınırsız kayıt için Pro'ya geçin.",
+    lockedTuning:"Bu akort düzeni Pro özelliğidir.",lockedTool:"Bu araç Pro üyeliğiyle açılır.",
+    purchaseDemoMessage:"Bu prototip gerçek ödeme almaz. Android sürümünde Google Play ödeme ekranı açılacak.",
+    restoreDemoMessage:"Satın alımları geri yükleme Android sürümünde Google Play üzerinden çalışacaktır.",
+    demoEnabled:"Pro önizleme etkin. Reklamlar gizlendi ve Pro araçları açıldı.",
+    demoDisabled:"Pro önizleme kapatıldı. Ücretsiz sürüme dönüldü.",
+    calibrationLocked:"Referans frekansı kalibrasyonu Pro özelliğidir."
+  });
+  Object.assign(translations.en, {
+    navMetronome:"METRONOME",navTuner:"TUNER",navPro:"EXPLORE PRO",
+    adLabel:"AD",adText:"A limited ad space supporting the free version",
+    tunerKicker:"ROCKJAZZ TUNING STUDIO",tunerHeading:"Chromatic Tuner",
+    tunerIntro:"Tune guitar, violin, ukulele and bağlama with your microphone. Audio is processed on your device.",
+    tunerInstrument:"INSTRUMENT",instrumentGuitar:"Guitar",instrumentViolin:"Violin",instrumentUkulele:"Ukulele",instrumentBaglama:"Bağlama",
+    baglamaSap:"BAĞLAMA TYPE",baglamaLong:"Long neck",baglamaShort:"Short neck",tunerProfile:"TUNING",
+    chromaticMode:"CHROMATIC",stringMode:"STRING TARGET",detectedNote:"DETECTED NOTE",
+    tunerWaiting:"Listening starts automatically when the tuner opens. Play one string at a time.",targetNote:"TARGET NOTE",
+    startTuner:"AUTO LISTENING",stopTuner:"STOP",
+    tunerPrivacy:"Audio is not recorded or sent online; analysis runs on this device.",
+    tunerProTools:"PRO TUNING TOOLS",referencePitch:"Reference pitch",referencePitchHelp:"A4 calibration from 432–446 Hz",
+    referenceTone:"Reference tone",referenceToneHelp:"Listen to the selected string's target note",
+    noiseFilter:"Advanced noise filter",noiseFilterHelp:"Helps reduce surrounding noise",
+    strobeMode:"Strobe display",strobeHelp:"Moving precision indicator for fine tuning",
+    listen:"LISTEN",enable:"ON",unlockTunerTools:"UNLOCK ALL PRO TUNING TOOLS",
+    freeVsProTuner:"FREE / PRO TUNER",freeTunerCopy:"Chromatic tuning and standard tunings for all four instruments are included free.",
+    proTunerBenefit1:"Alternative bağlama tunings",proTunerBenefit2:"Alternate guitar and ukulele tunings",
+    proTunerBenefit3:"Reference tones and precise pitch calibration",proTunerBenefit4:"Noise filter and strobe display",
+    seeProPlans:"VIEW PRO PLANS",upgradeTitle:"Upgrade to RockJazz Pro",upgradeSubtitle:"Unlock the full metronome and tuning studio.",
+    upgradeBenefit1:"Unlimited tempo presets and advanced rhythm tools",
+    upgradeBenefit2:"Bağlama tuning systems and alternate instrument tunings",
+    upgradeBenefit3:"Reference tones, calibration, filtering and strobe",
+    upgradeBenefit4:"Regular new practice programs and an ad-free experience",
+    monthlyPlan:"MONTHLY",yearlyPlan:"YEARLY",monthlyRenewal:"Renews automatically every month",
+    yearlyRenewal:"Renews once a year • Better value",bestValue:"BEST VALUE",
+    selectedYearPlan:"Yearly plan selected: 399.99 TL / year.",
+    selectedMonthPlan:"Monthly plan selected: 49.99 TL / month.",
+    purchaseContinue:"CONTINUE TO PURCHASE",restorePurchases:"Restore purchases",
+    billingDisclosure:"Subscription renews automatically. The charge is shown at checkout. You can cancel through Google Play before the renewal date.",
+    prototypeNote:"This HTML prototype does not process payments. Google Play Billing will be connected in the Android version.",
+    demoPro:"PREVIEW PRO FEATURES (DEMO)",disableDemoPro:"TURN OFF PRO DEMO",
+    tunerPermission:"Microphone permission was not granted. Allow microphone access in browser settings.",
+    tunerSecure:"A secure connection is required for microphone access. Open via HTTPS or the Android app.",
+    tunerNoSignal:"Waiting for sound… Play one string at a time.",tunerListening:"Auto listening is on • Play one string at a time.",
+    tunerInTune:"IN TUNE",tunerFlat:"FLAT • Tighten the string slightly",tunerSharp:"SHARP • Loosen the string slightly",
+    tunerMicStartError:"Could not start microphone: ",tunerTargetLabel:"Closest string",
+    tunerTargetManual:"Selected string",tunerFlatShort:"FLAT",tunerSharpShort:"SHARP",
+    presetLimitPro:"The free version allows up to 3 custom tempo presets. Upgrade to Pro for unlimited presets.",
+    lockedTuning:"This tuning is a Pro feature.",lockedTool:"This tool is available with Pro.",
+    purchaseDemoMessage:"This prototype does not process payments. Google Play checkout will open in the Android version.",
+    restoreDemoMessage:"Purchase restoration will use Google Play in the Android version.",
+    demoEnabled:"Pro preview enabled. Ads are hidden and Pro tools are unlocked.",
+    demoDisabled:"Pro preview disabled. Returned to the free version.",
+    calibrationLocked:"Reference pitch calibration is a Pro feature."
+  });
+  Object.assign(translations.ru, {
+    navMetronome:"МЕТРОНОМ",navTuner:"ТЮНЕР",navPro:"PRO ВЕРСИЯ",
+    adLabel:"РЕКЛАМА",adText:"Небольшой рекламный блок поддерживает бесплатную версию",
+    tunerKicker:"СТУДИЯ НАСТРОЙКИ ROCKJAZZ",tunerHeading:"Хроматический тюнер",
+    tunerIntro:"Настраивайте гитару, скрипку, укулеле и багламу через микрофон. Звук обрабатывается на устройстве.",
+    tunerInstrument:"ИНСТРУМЕНТ",instrumentGuitar:"Гитара",instrumentViolin:"Скрипка",instrumentUkulele:"Укулеле",instrumentBaglama:"Баглама",
+    baglamaSap:"ТИП БАГЛАМЫ",baglamaLong:"Длинный гриф",baglamaShort:"Короткий гриф",tunerProfile:"СТРОЙ",
+    chromaticMode:"ХРОМАТИЧЕСКИЙ",stringMode:"СТРУНА",
+    detectedNote:"ОПРЕДЕЛЁННАЯ НОТА",tunerWaiting:"При открытии тюнера прослушивание запускается автоматически. Играйте по одной струне.",targetNote:"ЦЕЛЕВАЯ НОТА",
+    startTuner:"АВТОПРОСЛУШИВАНИЕ",stopTuner:"СТОП",
+    tunerPrivacy:"Звук не записывается и не отправляется в интернет; анализ выполняется на этом устройстве.",
+    tunerProTools:"ИНСТРУМЕНТЫ PRO",referencePitch:"Опорная частота",referencePitchHelp:"Настройка A4 в диапазоне 432–446 Гц",
+    referenceTone:"Опорный звук",referenceToneHelp:"Прослушайте целевую ноту выбранной струны",
+    noiseFilter:"Улучшенный шумовой фильтр",noiseFilterHelp:"Помогает уменьшить окружающий шум",
+    strobeMode:"Стробоскопический режим",strobeHelp:"Движущийся индикатор для точной настройки",
+    listen:"СЛУШАТЬ",enable:"ВКЛ.",unlockTunerTools:"ОТКРЫТЬ ВСЕ ИНСТРУМЕНТЫ PRO",
+    freeVsProTuner:"БЕСПЛАТНО / PRO",freeTunerCopy:"Хроматическая настройка и стандартные строи четырёх инструментов доступны бесплатно.",
+    proTunerBenefit1:"Альтернативные строи багламы",proTunerBenefit2:"Альтернативные строи гитары и укулеле",
+    proTunerBenefit3:"Опорные звуки и точная калибровка частоты",proTunerBenefit4:"Шумовой фильтр и стробоскоп",
+    seeProPlans:"ПОСМОТРЕТЬ ТАРИФЫ PRO",upgradeTitle:"Перейти на RockJazz Pro",upgradeSubtitle:"Откройте все возможности метронома и тюнера.",
+    upgradeBenefit1:"Неограниченные темпы и расширенные ритмические инструменты",
+    upgradeBenefit2:"Строи багламы и альтернативные настройки инструментов",
+    upgradeBenefit3:"Опорные ноты, калибровка, фильтр и стробоскоп",
+    upgradeBenefit4:"Регулярные новые программы занятий и отсутствие рекламы",
+    monthlyPlan:"МЕСЯЦ",yearlyPlan:"ГОД",monthlyRenewal:"Автопродление каждый месяц",
+    yearlyRenewal:"Продление раз в год • Выгоднее",bestValue:"ВЫГОДНО",
+    selectedYearPlan:"Выбран годовой план: 399,99 TL / год.",
+    selectedMonthPlan:"Выбран месячный план: 49,99 TL / месяц.",
+    purchaseContinue:"ПЕРЕЙТИ К ПОКУПКЕ",restorePurchases:"Восстановить покупки",
+    billingDisclosure:"Подписка продлевается автоматически. Сумма показывается при оформлении. Отменить можно через Google Play до даты продления.",
+    prototypeNote:"Эта HTML-версия не принимает оплату. Google Play Billing будет подключён в версии Android.",
+    demoPro:"ПРЕДПРОСМОТР PRO (ДЕМО)",disableDemoPro:"ОТКЛЮЧИТЬ ДЕМО PRO",
+    tunerPermission:"Нет разрешения на микрофон. Разрешите доступ в настройках браузера.",
+    tunerSecure:"Для микрофона требуется защищённое соединение. Откройте через HTTPS или приложение Android.",
+    tunerNoSignal:"Ожидание звука… Играйте по одной струне.",
+    tunerListening:"Автопрослушивание включено • Играйте по одной струне.",
+    tunerInTune:"НАСТРОЕНО",tunerFlat:"НИЖЕ • Немного натяните струну",tunerSharp:"ВЫШЕ • Немного ослабьте струну",
+    tunerMicStartError:"Не удалось включить микрофон: ",tunerTargetLabel:"Ближайшая струна",
+    tunerTargetManual:"Выбранная струна",tunerFlatShort:"НИЖЕ",tunerSharpShort:"ВЫШЕ",
+    presetLimitPro:"В бесплатной версии можно сохранить до 3 темпов. Для неограниченных сохранений перейдите на Pro.",
+    lockedTuning:"Этот строй доступен в Pro.",lockedTool:"Этот инструмент доступен с Pro.",
+    purchaseDemoMessage:"Эта версия не принимает оплату. В Android откроется Google Play.",
+    restoreDemoMessage:"Восстановление покупок будет работать через Google Play в версии Android.",
+    demoEnabled:"Предпросмотр Pro включён. Реклама скрыта, инструменты Pro открыты.",
+    demoDisabled:"Предпросмотр Pro выключен. Возврат к бесплатной версии.",
+    calibrationLocked:"Калибровка опорной частоты доступна в Pro."
+  });
+
+
+  Object.assign(translations.tr, {
+    tunerGuideTitle:"AKORT CİHAZI NASIL KULLANILIR?",
+    tunerGuideInstrument:"Enstrümanını seç: Gitar, keman, ukulele veya bağlama. Bağlamada kısa ya da uzun sapı ve akort düzenini belirle.",
+    tunerGuideMic:"Akort ekranına girince dinleme otomatik başlar. İlk kullanımda mikrofon izni vermen gerekir. Uygulama sesi kaydetmez; cihaz üzerinde analiz eder.",
+    tunerGuidePlay:"Telleri tek tek çal: Nota ve frekans ekranda görünene kadar sesin biraz oturmasını bekle.",
+    tunerGuideNeedle:"Göstergeyi ortala: İbre ortadaysa akort tamamdır. Pes görünüyorsa teli biraz sık, tiz görünüyorsa biraz gevşet.",
+    tunerGuideBaglama:"Bağlamada düzenler ve tel oktavları değişebilir. Öğretmeninin veya kullandığın yöresel düzenin hedef seslerini esas al; farklı hedef için kromatik modu kullan.",
+    disable:"KAPAT",lowerGroup:"Alt grup",middleGroup:"Orta grup",upperGroup:"Üst grup"
+  });
+  Object.assign(translations.en, {
+    tunerGuideTitle:"HOW TO USE THE TUNER",
+    tunerGuideInstrument:"Choose an instrument: guitar, violin, ukulele or bağlama. For bağlama, select short or long neck and its tuning.",
+    tunerGuideMic:"Start the microphone: allow microphone access when asked. The app does not record audio; it analyses sound on your device.",
+    tunerGuidePlay:"Play strings one at a time: let the note settle until the note and frequency appear.",
+    tunerGuideNeedle:"Center the indicator: tuning is complete when the needle is centered. If flat, tighten slightly; if sharp, loosen slightly.",
+    tunerGuideBaglama:"Bağlama tunings and string octaves can vary. Follow your teacher's or local tuning reference; use chromatic mode for other target notes.",
+    disable:"OFF",lowerGroup:"Lower course",middleGroup:"Middle course",upperGroup:"Upper course"
+  });
+  Object.assign(translations.ru, {
+    tunerGuideTitle:"КАК ПОЛЬЗОВАТЬСЯ ТЮНЕРОМ",
+    tunerGuideInstrument:"Выберите инструмент: гитара, скрипка, укулеле или баглама. Для багламы выберите короткий или длинный гриф и строй.",
+    tunerGuideMic:"Включите микрофон: разрешите доступ, когда появится запрос. Звук не записывается, анализ выполняется на устройстве.",
+    tunerGuidePlay:"Играйте по одной струне: дождитесь, пока нота и частота появятся на экране.",
+    tunerGuideNeedle:"Совместите стрелку с центром: настройка завершена, когда стрелка в центре. Если звук ниже, слегка натяните струну; если выше — ослабьте.",
+    tunerGuideBaglama:"Строи багламы и октавы струн могут различаться. Следуйте настройке преподавателя или вашей традиции; для других нот используйте хроматический режим.",
+    disable:"ВЫКЛ.",lowerGroup:"Нижняя группа",middleGroup:"Средняя группа",upperGroup:"Верхняя группа"
+  });
+  function tr(key) {
+    return (translations[currentLanguage] && translations[currentLanguage][key]) || translations.tr[key] || key;
+  }
+
+  function setTranslatedAttribute(element, attribute, key) {
+    if (element && key) element.setAttribute(attribute,tr(key));
+  }
+
+  function applyLanguage(language) {
+    currentLanguage = translations[language] ? language : "tr";
+    document.documentElement.lang = currentLanguage;
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+      const key = element.getAttribute("data-i18n");
+      if (translations[currentLanguage][key] !== undefined) element.textContent = tr(key);
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
+      setTranslatedAttribute(element,"placeholder",element.getAttribute("data-i18n-placeholder"));
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach(element => {
+      setTranslatedAttribute(element,"aria-label",element.getAttribute("data-i18n-aria"));
+    });
+    $("stageMeter").textContent = `${numerator.value}/${denominator.value} • ${tr(["meterQuarter","meterEighth","meterTriplet","meterSixteenth"][Number(subdivision.value)-1])}`;
+    $("tempoDescription").textContent = termDescriptions[getTempoTerm(bpm).name][["tr","en","ru"].indexOf(currentLanguage)];
+    $("topStatus").textContent = isPlaying ? tr("playing") : tr("ready");
+    $("statusText").textContent = isPlaying ? tr("playingText").replace("{bpm}",bpm).replace("{term}",getTempoTerm(bpm).name) : tr("statusReady");
+    $("languageSelect").value = currentLanguage;
+    if ($("selectedPlanLine")) selectBillingPlan(selectedBillingPlan || "yearly");
+    if ($("tuneStatus") && !tunerRunning) $("tuneStatus").textContent = tr("tunerWaiting");
+    bpmSlider.setAttribute("aria-label",currentLanguage==="tr"?"Hız":currentLanguage==="en"?"Tempo":"Темп");
+    bpmInput.setAttribute("aria-label",currentLanguage==="tr"?"BPM değeri":currentLanguage==="en"?"BPM value":"Значение BPM");
+    document.title = currentLanguage === "tr" ? "RockJazz Profesyonel Metronom V2.7 Test" :
+      currentLanguage === "en" ? "RockJazz Professional Metronome V2.7 Test" : "RockJazz Профессиональный метроном V2.7 Test";
+  }
+
+  const tempoTerms = [
+    {min:0,max:20,name:"Larghissimo",description:"Çok, çok yavaş",priority:3},
+    {min:20,max:40,name:"Grave",description:"Ağır ve ciddi",priority:1},
+    {min:40,max:60,name:"Largo",description:"Geniş ve çok yavaş",priority:1},
+    {min:45,max:60,name:"Lento",description:"Yavaşça",priority:2},
+    {min:60,max:76,name:"Adagio",description:"Yavaş ve rahat",priority:1},
+    {min:65,max:69,name:"Adagietto",description:"Adagio'dan biraz daha hızlı",priority:3},
+    {min:72,max:76,name:"Adagietto",description:"Adagio'dan biraz daha hızlı",priority:3},
+    {min:76,max:88,name:"Andante",description:"Sakince, yürüyüş temposunda",priority:1},
+    {min:88,max:120,name:"Moderato",description:"Orta hızda",priority:1},
+    {min:112,max:120,name:"Allegretto",description:"Orta derecede hızlı",priority:2},
+    {min:120,max:168,name:"Allegro",description:"Hızlı, neşeli ve canlı",priority:1},
+    {min:132,max:140,name:"Vivace",description:"Canlı ve hızlı",priority:2},
+    {min:168,max:200,name:"Presto",description:"Çok hızlı",priority:2},
+    {min:200,max:999,name:"Prestissimo",description:"Olabildiğince hızlı",priority:3}
+  ];
+
+  let bpm = 120;
+  let audioCtx = null;
+  let masterGain = null;
+  let isPlaying = false;
+  let schedulerTimer = null;
+  let animationFrame = null;
+  let nextBeatTime = 0;
+  let beatIndex = 0;
+  let completedBars = 0;
+  let lastScheduledBeatTime = 0;
+  let visualPhase = 0;
+  let visualLastAudioTime = 0;
+  let tapTimes = [];
+  let savedPresets = [];
+  const scheduleAhead = 0.12;
+  const schedulerInterval = 20;
+  const swingAmplitude = 13.5;
+
+  const clamp = (value,min,max) => Math.min(max,Math.max(min,value));
+
+  function getTempoTerm(value) {
+    const matches = tempoTerms.filter(term => value >= term.min && value <= term.max);
+    if (!matches.length) return tempoTerms.find(term => value < term.min) || tempoTerms[tempoTerms.length-1];
+    return matches.sort((a,b) => b.priority-a.priority)[0];
+  }
+
+  function beatDuration() {
+    const denominatorValue = Number(denominator.value);
+    return (60 / bpm) * (4 / denominatorValue);
+  }
+
+  function updateWeightPosition() {
+    // Düşük BPM: ağırlık yukarıda (mafsaldan uzak); yüksek BPM: aşağıda.
+    const distance = 350 - ((bpm - 20) / 280) * 245;
+    counterweight.setAttribute("transform", `translate(0 ${(-distance).toFixed(2)})`);
+  }
+
+  function updateTempo(value, reschedule = true) {
+    const nextBpm = clamp(Math.round(Number(value) || 120),20,300);
+    if (isPlaying && audioCtx && reschedule && nextBpm !== bpm) {
+      advanceVisualPhase(audioCtx.currentTime);
+      const now = audioCtx.currentTime;
+      bpm = nextBpm;
+      const newPeriod = beatDuration();
+      const nextEndpoint = (Math.floor(visualPhase / Math.PI) + 1) * Math.PI;
+      const phaseRemaining = Math.max(0.02,(nextEndpoint - visualPhase) / Math.PI * newPeriod);
+      nextBeatTime = now + phaseRemaining;
+      visualLastAudioTime = now;
+    } else {
+      bpm = nextBpm;
+    }
+    bpmSlider.value = String(bpm);
+    bpmInput.value = String(bpm);
+    bpmDisplay.textContent = String(bpm);
+    const term = getTempoTerm(bpm);
+    $("tempoTerm").textContent = term.name;
+    $("tempoDescription").textContent = termDescriptions[term.name][["tr","en","ru"].indexOf(currentLanguage)];
+    updateWeightPosition();
+    if (isPlaying) statusText.textContent = tr("playingText").replace("{bpm}",bpm).replace("{term}",term.name);
+  }
+
+  function initAudio() {
+    if (audioCtx) return;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) throw new Error("Tarayıcınız Web Audio API desteklemiyor.");
+    audioCtx = new AudioContextClass({latencyHint:"interactive"});
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = Number($("volume").value) / 100;
+    masterGain.connect(audioCtx.destination);
+  }
+
+  function tone(time,frequency,duration,waveform,gain) {
+    const oscillator = audioCtx.createOscillator();
+    const envelope = audioCtx.createGain();
+    oscillator.type = waveform;
+    oscillator.frequency.setValueAtTime(frequency,time);
+    envelope.gain.setValueAtTime(0.0001,time);
+    envelope.gain.exponentialRampToValueAtTime(Math.max(0.0001,gain),time+0.003);
+    envelope.gain.exponentialRampToValueAtTime(0.0001,time+duration);
+    oscillator.connect(envelope);
+    envelope.connect(masterGain);
+    oscillator.start(time);
+    oscillator.stop(time+duration+0.02);
+  }
+
+  function noise(time,duration,gain,cutoff) {
+    const length = Math.max(1,Math.floor(audioCtx.sampleRate*duration));
+    const buffer = audioCtx.createBuffer(1,length,audioCtx.sampleRate);
+    const channel = buffer.getChannelData(0);
+    for (let i=0;i<length;i++) channel[i] = (Math.random()*2-1)*(1-i/length);
+    const source = audioCtx.createBufferSource();
+    const filter = audioCtx.createBiquadFilter();
+    const envelope = audioCtx.createGain();
+    source.buffer = buffer;
+    filter.type = "highpass";
+    filter.frequency.value = cutoff;
+    envelope.gain.setValueAtTime(gain,time);
+    envelope.gain.exponentialRampToValueAtTime(0.0001,time+duration);
+    source.connect(filter);
+    filter.connect(envelope);
+    envelope.connect(masterGain);
+    source.start(time);
+  }
+
+  function playClick(time,isAccent,isSubdivision) {
+    const volume = Number($("volume").value)/100;
+    const strength = (isAccent ? 0.9 : 0.58) * volume * (isSubdivision ? 0.36 : 1);
+    const type = $("soundType").value;
+    if (type === "mechanical") {
+      tone(time,isAccent?1900:1450,0.045,"square",strength*0.2);
+      noise(time,0.024,strength*0.19,1900);
+    } else if (type === "wood") {
+      tone(time,isAccent?1280:960,0.065,"triangle",strength*0.62);
+    } else if (type === "digital") {
+      tone(time,isAccent?2250:1650,0.035,"sine",strength*0.65);
+    } else if (type === "bell") {
+      tone(time,isAccent?1760:1320,0.2,"sine",strength*0.48);
+      tone(time+0.004,isAccent?2640:1980,0.14,"sine",strength*0.18);
+    } else if (type === "drum") {
+      if (isAccent) {
+        tone(time,125,0.12,"sine",strength*0.72);
+        noise(time,0.035,strength*0.24,1200);
+      } else {
+        tone(time,185,0.055,"triangle",strength*0.55);
+      }
+    } else if (type === "rim") {
+      tone(time,isAccent?1850:1450,0.035,"square",strength*0.48);
+      noise(time,0.04,strength*0.36,2600);
+    }
+  }
+
+  function showBeat(index) {
+    const dots = [...$("beatIndicators").children];
+    dots.forEach((dot,i) => {
+      const active = i === index;
+      dot.classList.toggle("active",active);
+      if (active) dot.setAttribute("aria-current","step");
+      else dot.removeAttribute("aria-current");
+    });
+  }
+
+  function rebuildBeatIndicators() {
+    const count = Number(numerator.value);
+    $("beatIndicators").replaceChildren();
+    for (let i=0;i<count;i++) {
+      const dot = document.createElement("div");
+      dot.className = "beat-dot" + (i===0 ? " accent" : "");
+      dot.textContent = String(i+1);
+      $("beatIndicators").appendChild(dot);
+    }
+    $("stageMeter").textContent = `${numerator.value}/${denominator.value} • ${tr(["meterQuarter","meterEighth","meterTriplet","meterSixteenth"][Number(subdivision.value)-1])}`;
+  }
+
+  function maybeRampTempo() {
+    if (!$("rampToggle").checked) return;
+    const every = clamp(Number($("rampBars").value)||4,1,64);
+    if (completedBars % every !== 0) return;
+    const step = clamp(Number($("rampStep").value)||2,1,20);
+    const direction = $("rampDirection").value === "up" ? 1 : -1;
+    const next = clamp(bpm + direction*step,20,300);
+    if (next !== bpm) updateTempo(next,false);
+  }
+
+  function scheduleBeat(time) {
+    const beatsPerBar = Number(numerator.value);
+    const parts = Number(subdivision.value);
+    const duration = beatDuration();
+    const currentBeat = beatIndex;
+    const accent = currentBeat === 0 && $("accentToggle").checked;
+
+    for (let part=0;part<parts;part++) {
+      const clickTime = time + duration * part / parts;
+      playClick(clickTime,accent && part===0,part!==0);
+    }
+
+    const delay = Math.max(0,(time-audioCtx.currentTime)*1000);
+    window.setTimeout(() => showBeat(currentBeat),delay);
+
+    beatIndex++;
+    if (beatIndex >= beatsPerBar) {
+      beatIndex = 0;
+      completedBars++;
+      maybeRampTempo();
+    }
+
+    lastScheduledBeatTime = time;
+    nextBeatTime = time + beatDuration();
+  }
+
+  function scheduler() {
+    if (!isPlaying || !audioCtx) return;
+    while (nextBeatTime < audioCtx.currentTime + scheduleAhead) {
+      const scheduledTime = nextBeatTime;
+      scheduleBeat(scheduledTime);
+    }
+  }
+
+  function advanceVisualPhase(audioTime) {
+    if (audioTime > visualLastAudioTime) {
+      visualPhase += (audioTime-visualLastAudioTime) * Math.PI / beatDuration();
+      visualLastAudioTime = audioTime;
+    }
+  }
+
+  function animatePendulum() {
+    if (!isPlaying || !audioCtx) return;
+    advanceVisualPhase(audioCtx.currentTime);
+    const angle = swingAmplitude * Math.cos(visualPhase);
+    // Kol, ağırlık ve mafsal tek SVG grubunda döner: ağırlık hiçbir zaman koldan ayrılmaz.
+    arm.setAttribute("transform",`rotate(${angle.toFixed(3)} 320 545)`);
+    animationFrame = requestAnimationFrame(animatePendulum);
+  }
+
+  async function startMetronome() {
+    if (isPlaying) return;
+    try {
+      initAudio();
+      if (audioCtx.state === "suspended") await audioCtx.resume();
+    } catch (error) {
+      statusText.textContent = tr("startError") + error.message;
+      return;
+    }
+
+    isPlaying = true;
+    beatIndex = 0;
+    completedBars = 0;
+    const firstBeatTime = audioCtx.currentTime + 0.09;
+    nextBeatTime = firstBeatTime;
+    lastScheduledBeatTime = firstBeatTime;
+    visualPhase = 0;
+    visualLastAudioTime = firstBeatTime;
+
+    playBtn.textContent = "Ⅱ";
+    playBtn.setAttribute("aria-label",tr("stopAria"));
+    statusText.textContent = tr("playingText").replace("{bpm}",bpm).replace("{term}",getTempoTerm(bpm).name);
+    statusText.classList.add("live");
+    topStatus.textContent = tr("playing");
+    topStatus.classList.add("live");
+
+    scheduler();
+    schedulerTimer = window.setInterval(scheduler,schedulerInterval);
+    cancelAnimationFrame(animationFrame);
+    animatePendulum();
+  }
+
+  function stopMetronome() {
+    if (!isPlaying) return;
+    isPlaying = false;
+    window.clearInterval(schedulerTimer);
+    schedulerTimer = null;
+    cancelAnimationFrame(animationFrame);
+    arm.setAttribute("transform","rotate(0 320 545)");
+    playBtn.textContent = "▶";
+    playBtn.setAttribute("aria-label",tr("startMetronome"));
+    statusText.textContent = tr("stopped");
+    statusText.classList.remove("live");
+    topStatus.textContent = tr("ready");
+    topStatus.classList.remove("live");
+    [...$("beatIndicators").children].forEach((dot,i) => dot.classList.toggle("active",i===0));
+  }
+
+  function updateVolume() {
+    const value = Number($("volume").value);
+    $("volumeValue").textContent = `${value}%`;
+    if (masterGain && audioCtx) {
+      masterGain.gain.setTargetAtTime(value/100,audioCtx.currentTime,0.015);
+    }
+  }
+
+  function persistPresets() {
+    try { localStorage.setItem("rockjazz-metronome-presets",JSON.stringify(savedPresets)); }
+    catch (_) {
+      $("statusText").textContent = currentLanguage==="en" ? "Could not save in this browser." :
+        currentLanguage==="ru" ? "Не удалось сохранить в этом браузере." :
+        "Bu tarayıcıda kayıt yapılamadı.";
+    }
+  }
+
+  function applyPreset(preset) {
+    if (!preset || !Number.isFinite(Number(preset.bpm))) return;
+    updateTempo(Number(preset.bpm));
+    renderPresets(preset.id || null);
+    $("statusText").textContent = tr("presetApplied")
+      .replace("{name}",preset.name)
+      .replace("{bpm}",String(preset.bpm));
+  }
+
+  function deletePreset(id) {
+    const target = savedPresets.find(item => item.id === id);
+    if (!target) return;
+    savedPresets = savedPresets.filter(item => item.id !== id);
+    persistPresets();
+    renderPresets();
+    $("statusText").textContent = tr("presetDeleted");
+  }
+
+  function savePreset() {
+    const name = $("presetName").value.trim();
+    if (!name) {
+      $("presetName").focus();
+      $("statusText").textContent = tr("needPresetName");
+      return;
+    }
+    if (!demoProAccess && savedPresets.length >= 3) {
+      $("statusText").textContent = tr("presetLimitPro");
+      openProModal("presetLimit");
+      return;
+    }
+    const preset = {
+      id: "preset-" + Date.now() + "-" + Math.floor(Math.random()*100000),
+      name: name.slice(0,22),
+      bpm: bpm
+    };
+    savedPresets.push(preset);
+    persistPresets();
+    $("presetName").value = "";
+    renderPresets(preset.id);
+    // Kaydettiğimiz BPM aynı anda ana tempo alanına uygulanır.
+    updateTempo(preset.bpm);
+    $("statusText").textContent = tr("presetSaved")
+      .replace("{name}",preset.name)
+      .replace("{bpm}",String(preset.bpm));
+  }
+
+  function renderPresets(selectedId = null) {
+    const list = $("presetList");
+    list.replaceChildren();
+
+    const builtins = [
+      {name:"Largo",bpm:60},
+      {name:"Andante",bpm:80},
+      {name:"Moderato",bpm:100},
+      {name:"Allegro",bpm:120},
+      {name:"Vivace",bpm:136},
+      {name:"Presto",bpm:180}
+    ];
+
+    function createPresetRow(preset,isCustom) {
+      const row = document.createElement("div");
+      row.className = "preset-item" + (selectedId && preset.id===selectedId ? " selected" : "");
+      const name = document.createElement("span");
+      name.className = "preset-name";
+      name.textContent = preset.name;
+      const bpmValue = document.createElement("span");
+      bpmValue.className = "preset-bpm";
+      bpmValue.textContent = `${preset.bpm} BPM`;
+      const apply = document.createElement("button");
+      apply.type = "button";
+      apply.className = "preset-apply";
+      apply.textContent = tr("presetApply");
+      apply.addEventListener("click",() => applyPreset(preset));
+      row.append(name,bpmValue,apply);
+
+      if (isCustom) {
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "preset-delete";
+        remove.textContent = "×";
+        remove.title = tr("presetDelete");
+        remove.setAttribute("aria-label",`${tr("presetDelete")}: ${preset.name}`);
+        remove.addEventListener("click",() => deletePreset(preset.id));
+        row.appendChild(remove);
+        row.style.gridTemplateColumns = "minmax(0,1fr) auto auto auto";
+      }
+      list.appendChild(row);
+    }
+
+    const builtinsLabel = document.createElement("div");
+    builtinsLabel.className = "preset-group-label";
+    builtinsLabel.textContent = tr("builtinPresets");
+    list.appendChild(builtinsLabel);
+    builtins.forEach(preset => createPresetRow(preset,false));
+
+    const savedLabel = document.createElement("div");
+    savedLabel.className = "preset-group-label";
+    savedLabel.textContent = currentLanguage==="en" ? "MY SAVED TEMPOS" :
+      currentLanguage==="ru" ? "МОИ СОХРАНЁННЫЕ ТЕМПЫ" : "KAYDETTİĞİM TEMPOLAR";
+    list.appendChild(savedLabel);
+
+    if (!savedPresets.length) {
+      const empty = document.createElement("div");
+      empty.className = "preset-empty";
+      empty.textContent = tr("presetEmpty");
+      list.appendChild(empty);
+    } else {
+      savedPresets.forEach(preset => createPresetRow(preset,true));
+    }
+  }
+
+  function loadPresets() {
+    try {
+      const stored = JSON.parse(localStorage.getItem("rockjazz-metronome-presets") || "[]");
+      if (Array.isArray(stored)) {
+        savedPresets = stored
+          .filter(p => p && typeof p.name === "string" && Number.isFinite(Number(p.bpm)))
+          .map((p,index) => ({
+            id: p.id || `legacy-${index}-${String(p.name).replace(/[^a-z0-9]/gi,"").slice(0,8)}`,
+            name: p.name.slice(0,22),
+            bpm: clamp(Math.round(Number(p.bpm)),20,300)
+          }));
+      }
+    } catch (_) { savedPresets = []; }
+    persistPresets();
+    renderPresets();
+  }
+
+    bpmSlider.addEventListener("input",event => updateTempo(event.target.value));
+  bpmInput.addEventListener("change",event => updateTempo(event.target.value));
+  bpmInput.addEventListener("keydown",event => {
+    if (event.key === "Enter") { updateTempo(event.target.value); bpmInput.blur(); }
+  });
+  $("minusBtn").addEventListener("click",() => updateTempo(bpm-1));
+  $("plusBtn").addEventListener("click",() => updateTempo(bpm+1));
+  playBtn.addEventListener("click",() => isPlaying ? stopMetronome() : startMetronome());
+  $("resetBtn").addEventListener("click",stopMetronome);
+  $("tapBtn").addEventListener("click",() => {
+    const now = performance.now();
+    tapTimes = tapTimes.filter(time => now-time < 2500);
+    tapTimes.push(now);
+    if (tapTimes.length >= 2) {
+      const intervals = tapTimes.slice(1).map((time,index) => time-tapTimes[index]);
+      const average = intervals.reduce((sum,value) => sum+value,0)/intervals.length;
+      updateTempo(Math.round(60000/average));
+    }
+    if (tapTimes.length > 6) tapTimes.shift();
+    statusText.textContent = tapTimes.length < 2 ? tr("tapAgain") : tr("tapSet").replace("{bpm}",bpm);
+  });
+  $("testSoundBtn").addEventListener("click",async () => {
+    try {
+      initAudio();
+      if (audioCtx.state === "suspended") await audioCtx.resume();
+      const now = audioCtx.currentTime + 0.035;
+      playClick(now,true,false);
+      playClick(now+0.42,false,false);
+    } catch (error) {
+      statusText.textContent = tr("soundTestError") + error.message;
+    }
+  });
+  $("volume").addEventListener("input",updateVolume);
+
+  [numerator,denominator,subdivision].forEach(control => {
+    control.addEventListener("change",() => {
+      rebuildBeatIndicators();
+      if (isPlaying) {
+        stopMetronome();
+        startMetronome();
+      }
+    });
+  });
+
+  $("savePresetBtn").addEventListener("click",savePreset);
+  $("presetName").addEventListener("keydown",event => {
+    if (event.key === "Enter") savePreset();
+  });
+  document.addEventListener("keydown",event => {
+    if (["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)) return;
+    if (event.code === "Space") {
+      event.preventDefault();
+      if (isPlaying) stopMetronome(); else startMetronome();
+    } else if (event.code === "ArrowUp") {
+      updateTempo(bpm+1);
+    } else if (event.code === "ArrowDown") {
+      updateTempo(bpm-1);
+    }
+  });
+
+  document.addEventListener("visibilitychange",() => {
+    if (!document.hidden && isPlaying && audioCtx) {
+      visualLastAudioTime = Math.min(visualLastAudioTime,audioCtx.currentTime);
+      cancelAnimationFrame(animationFrame);
+      animatePendulum();
+    }
+  });
+
+
+  const helpDrawer = $("helpDrawer");
+  const helpBackdrop = $("helpBackdrop");
+  function openHelpDrawer() {
+    helpBackdrop.hidden = false;
+    requestAnimationFrame(() => helpBackdrop.classList.add("visible"));
+    helpDrawer.classList.add("open");
+    helpDrawer.setAttribute("aria-hidden","false");
+    document.body.classList.add("drawer-open");
+    $("closeHelpBtn").focus();
+  }
+  function closeHelpDrawer() {
+    helpDrawer.classList.remove("open");
+    helpDrawer.setAttribute("aria-hidden","true");
+    helpBackdrop.classList.remove("visible");
+    document.body.classList.remove("drawer-open");
+    window.setTimeout(() => { helpBackdrop.hidden = true; },240);
+    $("openHelpBtn").focus();
+  }
+  $("openHelpBtn").addEventListener("click",openHelpDrawer);
+  $("closeHelpBtn").addEventListener("click",closeHelpDrawer);
+  helpBackdrop.addEventListener("click",closeHelpDrawer);
+  document.addEventListener("keydown",event => {
+    if (event.key === "Escape" && helpDrawer.classList.contains("open")) closeHelpDrawer();
+  });
+
+
+  $("showMetronomeBtn").addEventListener("click",() => showAppView("metronome"));
+  $("showTunerBtn").addEventListener("click",() => showAppView("tuner"));
+  $("openProBtn").addEventListener("click",() => openProModal("header"));
+  $("openProFromTunerBtn").addEventListener("click",() => openProModal("tuner"));
+  $("openProBtn").addEventListener("keydown",event => { if(event.key==="Enter") openProModal("header"); });
+
+  $("closeProModalBtn").addEventListener("click",closeProModal);
+  $("proModalBackdrop").addEventListener("click",closeProModal);
+  $("monthlyPlanBtn").addEventListener("click",() => selectBillingPlan("monthly"));
+  $("yearlyPlanBtn").addEventListener("click",() => selectBillingPlan("yearly"));
+  $("purchaseProBtn").addEventListener("click",() => {
+    $("statusText").textContent = tr("purchaseDemoMessage");
+  });
+  $("restorePurchasesBtn").addEventListener("click",() => {
+    $("statusText").textContent = tr("restoreDemoMessage");
+  });
+  $("demoProBtn").addEventListener("click",enableDemoPro);
+  $("disableDemoProBtn").addEventListener("click",disableDemoPro);
+  document.addEventListener("keydown",event => {
+    if (event.key === "Escape" && !$("proModal").hidden) closeProModal();
+  });
+
+  $("languageSelect").addEventListener("change",event => {
+    applyLanguage(event.target.value);
+    renderPresets();
+    renderTunerProfiles();
+    renderTunerStrings();
+    selectBillingPlan(selectedBillingPlan);
+  });
+
+
+  // --- Free / Pro product model (HTML preview only; no real billing here) ---
+  // V2.7 TEST BUILD: temporarily unlock every Pro feature for QA.
+  // Restore the Free/Pro entitlement check before publishing the commercial build.
+  let demoProAccess = true;
+  let selectedBillingPlan = "yearly";
+
+  function openProModal(reason = "") {
+    $("proModalBackdrop").hidden = false;
+    $("proModal").hidden = false;
+    $("proModal").classList.add("visible");
+    $("proModal").setAttribute("data-reason",reason);
+    $("disableDemoProBtn").hidden = !demoProAccess;
+    $("demoProBtn").hidden = demoProAccess;
+    $("closeProModalBtn").focus();
+  }
+  function closeProModal() {
+    $("proModal").classList.remove("visible");
+    $("proModal").hidden = true;
+    $("proModalBackdrop").hidden = true;
+  }
+  function selectBillingPlan(plan) {
+    selectedBillingPlan = plan;
+    $("monthlyPlanBtn").classList.toggle("selected",plan==="monthly");
+    $("yearlyPlanBtn").classList.toggle("selected",plan==="yearly");
+    $("monthlyPlanBtn").setAttribute("aria-pressed",String(plan==="monthly"));
+    $("yearlyPlanBtn").setAttribute("aria-pressed",String(plan==="yearly"));
+    $("selectedPlanLine").textContent = tr(plan==="monthly" ? "selectedMonthPlan" : "selectedYearPlan");
+  }
+  function updatePlanUi() {
+    document.body.classList.toggle("pro-demo",demoProAccess);
+    $("tunerPlanBadge").textContent = demoProAccess ? "TEST • TÜMÜ AÇIK" : "FREE";
+    $("topStatus").textContent = demoProAccess ? "TEST • TÜMÜ AÇIK" : (isPlaying ? tr("playing") : tr("ready"));
+    $("demoProBtn").hidden = demoProAccess;
+    $("disableDemoProBtn").hidden = !demoProAccess;
+    $("calibrationSlider").disabled = !demoProAccess;
+    $("calibrationSlider").classList.toggle("locked-control",!demoProAccess);
+    $("tunerLockLabel").textContent = demoProAccess ? "TÜM ARAÇLAR AÇIK" : "PRO";
+    $("freeTunerCopy").textContent = tr("freeTunerCopy");
+    renderTunerProfiles();
+    renderTunerStrings();
+  }
+  function enableDemoPro() {
+    demoProAccess = true;
+    try { localStorage.setItem("rockjazz-pro-preview","1"); } catch (_) {}
+    updatePlanUi();
+    closeProModal();
+    $("statusText").textContent = tr("demoEnabled");
+  }
+  function disableDemoPro() {
+    // Test build keeps all tools unlocked; this control cannot downgrade access.
+    demoProAccess = true;
+    updatePlanUi();
+    closeProModal();
+    $("statusText").textContent = "TEST SÜRÜMÜ: TÜM ÖZELLİKLER AÇIK";
+  }
+
+  // --- Chromatic tuner: microphone audio stays on-device ---
+  const NOTE_NAMES = ["C","C♯","D","D♯","E","F","F♯","G","G♯","A","A♯","B"];
+  const tunerProfiles = {
+    guitar: [
+      {key:"guitar-standard",name:["Standart gitar","Standard guitar","Стандартная гитара"],pro:false,
+       strings:[["6. tel","E2",82.4069],["5. tel","A2",110],["4. tel","D3",146.832],["3. tel","G3",195.998],["2. tel","B3",246.942],["1. tel","E4",329.628]]},
+      {key:"guitar-dropd",name:["Drop D","Drop D","Drop D"],pro:true,
+       strings:[["6. tel","D2",73.416],["5. tel","A2",110],["4. tel","D3",146.832],["3. tel","G3",195.998],["2. tel","B3",246.942],["1. tel","E4",329.628]]},
+      {key:"guitar-dadgad",name:["DADGAD","DADGAD","DADGAD"],pro:true,
+       strings:[["6. tel","D2",73.416],["5. tel","A2",110],["4. tel","D3",146.832],["3. tel","G3",195.998],["2. tel","A3",220],["1. tel","D4",293.665]]},
+      {key:"guitar-openg",name:["Open G","Open G","Open G"],pro:true,
+       strings:[["6. tel","D2",73.416],["5. tel","G2",97.999],["4. tel","D3",146.832],["3. tel","G3",195.998],["2. tel","B3",246.942],["1. tel","D4",293.665]]}
+    ],
+    violin: [
+      {key:"violin-standard",name:["Standart keman","Standard violin","Стандартная скрипка"],pro:false,
+       strings:[["4. tel","G3",195.998],["3. tel","D4",293.665],["2. tel","A4",440],["1. tel","E5",659.255]]},
+      {key:"violin-aeae",name:["AEAE çapraz akort","AEAE cross tuning","Перекрёстный строй AEAE"],pro:true,
+       strings:[["4. tel","A3",220],["3. tel","E4",329.628],["2. tel","A4",440],["1. tel","E5",659.255]]}
+    ],
+    ukulele: [
+      {key:"ukulele-standard",name:["Standart GCEA","Standard GCEA","Стандартный GCEA"],pro:false,
+       strings:[["4. tel","G4",391.995],["3. tel","C4",261.626],["2. tel","E4",329.628],["1. tel","A4",440]]},
+      {key:"ukulele-lowg",name:["Low G","Low G","Низкий G"],pro:true,
+       strings:[["4. tel","G3",195.998],["3. tel","C4",261.626],["2. tel","E4",329.628],["1. tel","A4",440]]},
+      {key:"ukulele-baritone",name:["Bariton DGBE","Baritone DGBE","Баритон DGBE"],pro:true,
+       strings:[["4. tel","D3",146.832],["3. tel","G3",195.998],["2. tel","B3",246.942],["1. tel","E4",329.628]]}
+    ],
+    baglamaLong: [
+      {key:"baglama-long-bozuk",name:["Bozuk düzen • uzun sap","Bozuk tuning • long neck","Строй Бозук • длинный гриф"],pro:false,
+       strings:[["Alt grup","A3",220],["Orta grup","D3",146.832],["Üst grup","G3",195.998]]},
+      {key:"baglama-long-baglama",name:["Bağlama düzeni • uzun sap","Bağlama tuning • long neck","Строй Баглама • длинный гриф"],pro:true,
+       strings:[["Alt grup","A3",220],["Orta grup","D3",146.832],["Üst grup","E3",164.814]]},
+      {key:"baglama-long-misket",name:["Misket düzeni","Misket tuning","Строй Мискет"],pro:true,
+       strings:[["Alt grup","A3",220],["Orta grup","D3",146.832],["Üst grup","F♯3",185]]},
+      {key:"baglama-long-muste zat",name:["Müstezat düzeni","Müstezat tuning","Строй Мюстезат"],pro:true,
+       strings:[["Alt grup","A3",220],["Orta grup","D3",146.832],["Üst grup","F3",174.614]]}
+    ],
+    baglamaShort: [
+      {key:"baglama-short-bozuk",name:["Bozuk düzen • kısa sap","Bozuk tuning • short neck","Строй Бозук • короткий гриф"],pro:false,
+       strings:[["Alt grup","F4",349.228],["Orta grup","B♭3",233.082],["Üst grup","E♭4",311.127]]},
+      {key:"baglama-short-baglama",name:["Bağlama düzeni • kısa sap","Bağlama tuning • short neck","Строй Баглама • короткий гриф"],pro:true,
+       strings:[["Alt grup","F4",349.228],["Orta grup","B♭3",233.082],["Üst grup","C4",261.626]]}
+    ]
+  };
+
+  let tunerStream = null;
+  let tunerAudioContext = null;
+  let tunerAnalyser = null;
+  let tunerSource = null;
+  let tunerFrame = null;
+  let tunerBuffer = null;
+  let tunerRunning = false;
+  let tunerMode = "strings";
+  let tunerProfileKey = "guitar-standard";
+  let lastFreeProfileKey = "guitar-standard";
+  let selectedTunerString = -1;
+  let tunerCalibration = 440;
+  let tunerFilterEnabled = false;
+  let tunerStrobeEnabled = false;
+  let tunerReferenceOsc = null;
+  let tunerFrequencyHistory = [];
+  let tunerLastFrequency = null;
+  let tunerSmoothedCents = null;
+  let tunerLastGoodAt = 0;
+  let tunerStableFrames = 0;
+
+  function activeTunerProfiles() {
+    const instrument = $("tunerInstrument").value;
+    if (instrument === "baglama") return $("baglamaSap").value === "short" ? tunerProfiles.baglamaShort : tunerProfiles.baglamaLong;
+    return tunerProfiles[instrument] || tunerProfiles.guitar;
+  }
+  function activeTunerProfile() {
+    return activeTunerProfiles().find(profile => profile.key === tunerProfileKey) || activeTunerProfiles()[0];
+  }
+  function renderTunerProfiles() {
+    const select = $("tunerProfile");
+    if (!select) return;
+    const profiles = activeTunerProfiles();
+    const previous = tunerProfileKey;
+    select.replaceChildren();
+    profiles.forEach(profile => {
+      const option = document.createElement("option");
+      option.value = profile.key;
+      option.textContent = profile.name[["tr","en","ru"].indexOf(currentLanguage)];
+      option.dataset.pro = String(profile.pro);
+      select.appendChild(option);
+    });
+    let selected = profiles.find(profile => profile.key === previous);
+    if (!selected || (selected.pro && !demoProAccess)) selected = profiles[0];
+    tunerProfileKey = selected.key;
+    lastFreeProfileKey = selected.key;
+    select.value = selected.key;
+    $("baglamaSapField").hidden = $("tunerInstrument").value !== "baglama";
+    renderTunerStrings();
+  }
+  function localizeTunerStringLabel(label) {
+    const ordinal = String(label).match(/^(\d+)\. tel$/);
+    if (ordinal) {
+      const n = ordinal[1];
+      if (currentLanguage === "en") {
+        const suffix = n === "1" ? "st" : n === "2" ? "nd" : n === "3" ? "rd" : "th";
+        return `${n}${suffix} string`;
+      }
+      if (currentLanguage === "ru") return `${n}-я струна`;
+      return `${n}. tel`;
+    }
+    const groupKeys = {"Alt grup":"lowerGroup","Orta grup":"middleGroup","Üst grup":"upperGroup"};
+    return groupKeys[label] ? tr(groupKeys[label]) : label;
+  }
+
+  function renderTunerStrings() {
+    const list = $("tunerStringList");
+    if (!list) return;
+    list.replaceChildren();
+    const profile = activeTunerProfile();
+    profile.strings.forEach((target,index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "string-chip" + (selectedTunerString === index ? " selected" : "");
+      button.textContent = `${localizeTunerStringLabel(target[0])} · ${target[1]}`;
+      button.addEventListener("click",() => {
+        selectedTunerString = index;
+        renderTunerStrings();
+        $("targetNoteValue").textContent = `${target[1]} • ${target[2].toFixed(1)} Hz`;
+      });
+      list.appendChild(button);
+    });
+    if (selectedTunerString >= profile.strings.length) selectedTunerString = -1;
+  }
+  function getNearestTunerTarget(frequency) {
+    const strings = activeTunerProfile().strings;
+    if (!strings.length) return null;
+    if (tunerMode === "strings" && selectedTunerString >= 0) return strings[selectedTunerString];
+    let nearest = strings[0], best = Infinity;
+    strings.forEach(item => {
+      const cents = Math.abs(1200 * Math.log2(frequency / item[2]));
+      if (cents < best) { best = cents; nearest = item; }
+    });
+    return nearest;
+  }
+  function noteFromFrequency(frequency) {
+    const midiFloat = 69 + 12 * Math.log2(frequency / tunerCalibration);
+    const midi = Math.round(midiFloat);
+    const cents = (midiFloat - midi) * 100;
+    const note = NOTE_NAMES[((midi % 12) + 12) % 12];
+    const octave = Math.floor(midi / 12) - 1;
+    return {midi,note:`${note}${octave}`,cents};
+  }
+  function estimatePitch(input, sampleRate) {
+    // YIN tabanlı fark fonksiyonu: 4:1 seyrek örnekleme ile mobil cihazlarda hafif çalışır.
+    const stride = 4;
+    const count = Math.floor(input.length / stride);
+    const samples = new Float32Array(count);
+    let energy = 0;
+    for (let i=0;i<count;i++) {
+      const value = input[i*stride];
+      samples[i] = value;
+      energy += value*value;
+    }
+    const rms = Math.sqrt(energy / count);
+    if (rms < 0.0018) return null;
+    const effectiveRate = sampleRate / stride;
+    const minLag = Math.max(2,Math.floor(effectiveRate/1000));
+    const maxLag = Math.min(Math.floor(effectiveRate/55),Math.floor(count/2));
+    const differences = new Float32Array(maxLag+1);
+    const cumulative = new Float32Array(maxLag+1);
+    let running = 0;
+    for (let lag=minLag;lag<=maxLag;lag++) {
+      let sum = 0;
+      const limit = count-maxLag;
+      for (let i=0;i<limit;i++) {
+        const delta = samples[i]-samples[i+lag];
+        sum += delta*delta;
+      }
+      differences[lag] = sum;
+      running += sum;
+      cumulative[lag] = running ? (sum*lag)/running : 1;
+    }
+    let chosen = -1;
+    for (let lag=minLag+1;lag<maxLag;lag++) {
+      if (cumulative[lag] < 0.16 && cumulative[lag] <= cumulative[lag+1]) {
+        while (lag+1<maxLag && cumulative[lag+1] < cumulative[lag]) lag++;
+        chosen = lag;
+        break;
+      }
+    }
+    if (chosen < 0) {
+      let lowest = 1;
+      for (let lag=minLag;lag<=maxLag;lag++) {
+        if (cumulative[lag] < lowest) { lowest = cumulative[lag]; chosen = lag; }
+      }
+      if (chosen < 0 || lowest > 0.28) return null;
+    }
+    const left = cumulative[Math.max(minLag,chosen-1)];
+    const center = cumulative[chosen];
+    const right = cumulative[Math.min(maxLag,chosen+1)];
+    const denominator = 2*(2*center-left-right);
+    const shift = denominator ? (right-left)/denominator : 0;
+    const refinedLag = chosen + clamp(shift,-0.5,0.5);
+    const frequency = effectiveRate / refinedLag;
+    if (!Number.isFinite(frequency) || frequency < 50 || frequency > 1200) return null;
+    return {frequency,rms};
+  }
+  function updateTunerDisplay(frequency, centsOverride = null) {
+    const note = noteFromFrequency(frequency);
+    const nearest = getNearestTunerTarget(frequency);
+    const rawCents = tunerMode === "strings" && nearest
+      ? 1200*Math.log2(frequency/nearest[2]) : note.cents;
+    const cents = centsOverride === null ? rawCents : centsOverride;
+    $("detectedNote").textContent = note.note;
+    $("detectedFrequency").textContent = `${frequency.toFixed(1)} Hz`;
+    $("detectedCents").textContent = `${cents>0?"+":""}${cents.toFixed(1)} cent`;
+    $("nearestStringLabel").textContent = nearest
+      ? `${tr(tunerMode==="strings" && selectedTunerString>=0 ? "tunerTargetManual":"tunerTargetLabel")}: ${localizeTunerStringLabel(nearest[0])}`
+      : "";
+    $("targetNoteValue").textContent = nearest ? `${nearest[1]} • ${nearest[2].toFixed(1)} Hz` : note.note;
+    // İbreyi merkezde daha hassas, kenarlarda daha geniş hareket ettir.
+    const displayCents = Math.abs(cents) <= 2.2 ? 0 : clamp(cents,-50,50);
+    $("tunerPointer").style.left = `${50 + displayCents}%`;
+    $("tunerPointer").style.transform = "translateX(-50%)";
+    const status = $("tuneStatus");
+    status.classList.remove("waiting","good","flat","sharp");
+    if (Math.abs(cents) <= 2.2) {
+      status.classList.add("good");
+      status.textContent = tr("tunerInTune");
+    } else if (cents < 0) {
+      status.classList.add("flat");
+      status.textContent = tr("tunerFlat");
+    } else {
+      status.classList.add("sharp");
+      status.textContent = tr("tunerSharp");
+    }
+  }
+  function tunerLoop() {
+    if (!tunerRunning || !tunerAnalyser) return;
+    tunerAnalyser.getFloatTimeDomainData(tunerBuffer);
+    const result = estimatePitch(tunerBuffer,tunerAudioContext.sampleRate);
+    const now = performance.now();
+    if (result) {
+      const nearest = getNearestTunerTarget(result.frequency);
+      const rawCents = tunerMode === "strings" && nearest
+        ? 1200*Math.log2(result.frequency/nearest[2]) : noteFromFrequency(result.frequency).cents;
+      // Ani frekans sıçramalarını bastır: median + yumuşak EMA.
+      tunerFrequencyHistory.push(rawCents);
+      if (tunerFrequencyHistory.length > 7) tunerFrequencyHistory.shift();
+      const sorted = [...tunerFrequencyHistory].sort((a,b)=>a-b);
+      const median = sorted[Math.floor(sorted.length/2)];
+      if (tunerSmoothedCents === null) tunerSmoothedCents = median;
+      const alpha = Math.abs(median - tunerSmoothedCents) > 18 ? 0.12 : 0.22;
+      tunerSmoothedCents += (median - tunerSmoothedCents) * alpha;
+      if (Math.abs(tunerSmoothedCents) <= 2.2) {
+        tunerStableFrames++;
+        if (tunerStableFrames >= 3) tunerSmoothedCents = 0;
+      } else tunerStableFrames = 0;
+      tunerLastFrequency = result.frequency;
+      tunerLastGoodAt = now;
+      updateTunerDisplay(result.frequency,tunerSmoothedCents);
+    } else if (now - tunerLastGoodAt > 450) {
+      tunerFrequencyHistory = [];
+      tunerSmoothedCents = null;
+      tunerStableFrames = 0;
+      $("tuneStatus").className = "tune-status waiting";
+      $("tuneStatus").textContent = tr("tunerNoSignal");
+    }
+    tunerFrame = requestAnimationFrame(tunerLoop);
+  }
+  async function startTuner() {
+    if (tunerRunning) return;
+    $("tunerError").textContent = "";
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.isSecureContext) {
+      $("tunerError").textContent = tr("tunerSecure") + " Mikrofon için HTTPS adresi veya yerel Android uygulaması gerekir.";
+      return;
+    }
+    try {
+      tunerStream = await navigator.mediaDevices.getUserMedia({
+        audio:{channelCount:{ideal:1},sampleRate:{ideal:48000},echoCancellation:false,noiseSuppression:true,autoGainControl:true},
+        video:false
+      });
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      tunerAudioContext = new AudioContextClass({latencyHint:"interactive"});
+      if (tunerAudioContext.state === "suspended") await tunerAudioContext.resume();
+      tunerAnalyser = tunerAudioContext.createAnalyser();
+      tunerAnalyser.fftSize = 8192;
+      tunerAnalyser.smoothingTimeConstant = 0;
+      tunerSource = tunerAudioContext.createMediaStreamSource(tunerStream);
+      // Mobil tarayıcılarda analiz grafiğinin canlı kalması için sessiz çıkış kolu eklenir.
+      const silentMonitor = tunerAudioContext.createGain();
+      silentMonitor.gain.value = 0;
+      if (tunerFilterEnabled && demoProAccess) {
+        const high = tunerAudioContext.createBiquadFilter();
+        high.type = "highpass"; high.frequency.value = 45;
+        const low = tunerAudioContext.createBiquadFilter();
+        low.type = "lowpass"; low.frequency.value = 1500;
+        tunerSource.connect(high); high.connect(low); low.connect(tunerAnalyser); low.connect(silentMonitor);
+      } else {
+        tunerSource.connect(tunerAnalyser);
+        tunerSource.connect(silentMonitor);
+      }
+      silentMonitor.connect(tunerAudioContext.destination);
+      tunerBuffer = new Float32Array(tunerAnalyser.fftSize);
+      tunerStream.getAudioTracks().forEach(track => track.addEventListener("ended",() => {
+        if (tunerRunning) {
+          stopTuner();
+          $("tunerError").textContent = tr("tunerMicStartError") + " Mikrofon bağlantısı kesildi. Akort sekmesini yeniden açın.";
+        }
+      },{once:true}));
+      tunerRunning = true;
+      tunerFrequencyHistory = [];
+      tunerSmoothedCents = null;
+      tunerLastGoodAt = 0;
+      tunerStableFrames = 0;
+      $("startTunerBtn").textContent = tr("stopTuner");
+      $("stopTunerBtn").disabled = false;
+      $("tuneStatus").className = "tune-status waiting";
+      $("tuneStatus").textContent = tr("tunerListening");
+      $("tunerError").textContent = "";
+      tunerFrame = requestAnimationFrame(tunerLoop);
+    } catch (error) {
+      let message = error && error.name === "NotAllowedError" ? tr("tunerPermission") + " Android uygulama bilgileri > İzinler > Mikrofon bölümünden bu siteye izin verip sayfayı yeniden açın." : tr("tunerMicStartError") + (error.message || error);
+      $("tunerError").textContent = message;
+      stopTuner();
+    }
+  }
+  function stopTuner() {
+    tunerRunning = false;
+    cancelAnimationFrame(tunerFrame);
+    if (tunerStream) tunerStream.getTracks().forEach(track => track.stop());
+    tunerStream = null;
+    tunerSource = null;
+    if (tunerAudioContext) {
+      tunerAudioContext.close().catch(()=>{});
+      tunerAudioContext = null;
+    }
+    tunerAnalyser = null;
+    tunerBuffer = null;
+    tunerFrequencyHistory = [];
+    tunerSmoothedCents = null;
+    tunerLastGoodAt = 0;
+    tunerStableFrames = 0;
+    $("startTunerBtn").textContent = tr("startTuner");
+    $("stopTunerBtn").disabled = true;
+    $("tuneStatus").className = "tune-status waiting";
+    $("tuneStatus").textContent = tr("tunerWaiting");
+  }
+  function playTunerReference() {
+    if (!demoProAccess) { openProModal("referenceTone"); return; }
+    const profile = activeTunerProfile();
+    const target = selectedTunerString >= 0 ? profile.strings[selectedTunerString] :
+      (tunerLastFrequency ? getNearestTunerTarget(tunerLastFrequency) : profile.strings[0]);
+    if (!target) return;
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!tunerToneContext) tunerToneContext = new AudioContextClass();
+      if (tunerToneContext.state === "suspended") tunerToneContext.resume();
+      const oscillator = tunerToneContext.createOscillator();
+      const gain = tunerToneContext.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.value = target[2] * tunerCalibration / 440;
+      gain.gain.setValueAtTime(0.0001,tunerToneContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.12,tunerToneContext.currentTime+0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001,tunerToneContext.currentTime+1.2);
+      oscillator.connect(gain); gain.connect(tunerToneContext.destination);
+      oscillator.start(); oscillator.stop(tunerToneContext.currentTime+1.25);
+    } catch (error) { $("tunerError").textContent = error.message; }
+  }
+  let tunerToneContext = null;
+
+  function setTunerMode(mode) {
+    tunerMode = mode;
+    $("chromaticModeBtn").classList.toggle("active",mode==="chromatic");
+    $("stringModeBtn").classList.toggle("active",mode==="strings");
+  }
+  function showAppView(view) {
+    if (view === "tuner") {
+      if (isPlaying) stopMetronome();
+      $("metronomeView").hidden = true;
+      $("tunerView").hidden = false;
+      $("showTunerBtn").classList.add("active");
+      $("showMetronomeBtn").classList.remove("active");
+      if (!tunerRunning) startTuner();
+    } else {
+      stopTuner();
+      $("tunerView").hidden = true;
+      $("metronomeView").hidden = false;
+      $("showMetronomeBtn").classList.add("active");
+      $("showTunerBtn").classList.remove("active");
+    }
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+  function changeTunerProfile() {
+    const selected = activeTunerProfiles().find(profile => profile.key === $("tunerProfile").value);
+    if (selected && selected.pro && !demoProAccess) {
+      $("tunerProfile").value = lastFreeProfileKey;
+      openProModal("tuning");
+      return;
+    }
+    tunerProfileKey = selected ? selected.key : activeTunerProfiles()[0].key;
+    lastFreeProfileKey = selected && !selected.pro ? selected.key : lastFreeProfileKey;
+    selectedTunerString = -1;
+    renderTunerStrings();
+  }
+  function updateCalibration() {
+    if (!demoProAccess) {
+      $("calibrationSlider").value = "440";
+      $("calibrationValue").textContent = "440 Hz";
+      openProModal("calibration");
+      return;
+    }
+    tunerCalibration = Number($("calibrationSlider").value);
+    $("calibrationValue").textContent = `${tunerCalibration} Hz`;
+  }
+  function toggleNoiseFilter() {
+    if (!demoProAccess) { openProModal("filter"); return; }
+    tunerFilterEnabled = !tunerFilterEnabled;
+    $("noiseFilterBtn").textContent = tunerFilterEnabled ? tr("disable") : tr("enable");
+    $("noiseFilterBtn").setAttribute("aria-pressed",String(tunerFilterEnabled));
+    if (tunerRunning) { stopTuner(); startTuner(); }
+  }
+  function toggleStrobe() {
+    if (!demoProAccess) { openProModal("strobe"); return; }
+    tunerStrobeEnabled = !tunerStrobeEnabled;
+    $("tunerDisplay").classList.toggle("strobe-on",tunerStrobeEnabled);
+    $("strobeBtn").textContent = tunerStrobeEnabled ? tr("disable") : tr("enable");
+    $("strobeBtn").setAttribute("aria-pressed",String(tunerStrobeEnabled));
+  }
+
+  function setupTuner() {
+    $("tunerInstrument").addEventListener("change",() => {
+      selectedTunerString = -1;
+      tunerProfileKey = "";
+      renderTunerProfiles();
+    });
+    $("baglamaSap").addEventListener("change",() => {
+      selectedTunerString = -1;
+      tunerProfileKey = "";
+      renderTunerProfiles();
+    });
+    $("tunerProfile").addEventListener("change",changeTunerProfile);
+    $("chromaticModeBtn").addEventListener("click",() => setTunerMode("chromatic"));
+    $("stringModeBtn").addEventListener("click",() => setTunerMode("strings"));
+    $("stopTunerBtn").addEventListener("click",stopTuner);
+    $("playReferenceBtn").addEventListener("click",playTunerReference);
+    $("noiseFilterBtn").addEventListener("click",toggleNoiseFilter);
+    $("strobeBtn").addEventListener("click",toggleStrobe);
+    $("calibrationSlider").addEventListener("input",updateCalibration);
+    $("unlockTunerToolsBtn").addEventListener("click",() => openProModal("tunerTools"));
+    $("openProFromTunerBtn").addEventListener("click",() => openProModal("tuner"));
+    renderTunerProfiles();
+    $("calibrationSlider").value = "440";
+  }
+
+  // Free users can save up to three personal tempo presets; existing presets remain usable.
+
+  // Free / Pro sınırları: temel çalışma ücretsiz kalır, gelişmiş antrenman Pro'ya ayrılır.
+  let lastFreeMeter = {numerator:"4",denominator:"4"};
+  let lastFreeSubdivision = "1";
+  let lastFreeSound = "mechanical";
+
+  numerator.addEventListener("change",() => {
+    const freeNumerators = ["2","3","4","6"];
+    const allowed = demoProAccess || (freeNumerators.includes(numerator.value) && ["4","8"].includes(denominator.value));
+    if (!allowed) {
+      numerator.value = lastFreeMeter.numerator;
+      denominator.value = lastFreeMeter.denominator;
+      rebuildBeatIndicators();
+      openProModal("advancedMeter");
+      return;
+    }
+    lastFreeMeter = {numerator:numerator.value,denominator:denominator.value};
+  });
+  denominator.addEventListener("change",() => {
+    const freeNumerators = ["2","3","4","6"];
+    const allowed = demoProAccess || (freeNumerators.includes(numerator.value) && ["4","8"].includes(denominator.value));
+    if (!allowed) {
+      numerator.value = lastFreeMeter.numerator;
+      denominator.value = lastFreeMeter.denominator;
+      rebuildBeatIndicators();
+      openProModal("advancedMeter");
+      return;
+    }
+    lastFreeMeter = {numerator:numerator.value,denominator:denominator.value};
+  });
+  subdivision.addEventListener("change",() => {
+    if (!demoProAccess && ["3","4"].includes(subdivision.value)) {
+      subdivision.value = lastFreeSubdivision;
+      rebuildBeatIndicators();
+      openProModal("advancedSubdivision");
+      return;
+    }
+    lastFreeSubdivision = subdivision.value;
+  });
+  $("rampToggle").addEventListener("change",() => {
+    if ($("rampToggle").checked && !demoProAccess) {
+      $("rampToggle").checked = false;
+      openProModal("tempoTraining");
+    }
+  });
+  $("soundType").addEventListener("change",() => {
+    if (!demoProAccess && ["bell","drum","rim"].includes($("soundType").value)) {
+      $("soundType").value = lastFreeSound;
+      openProModal("soundPack");
+      return;
+    }
+    lastFreeSound = $("soundType").value;
+  });
+
+  setupTuner();
+  updatePlanUi();
+  selectBillingPlan("yearly");
+  updateTempo(120,false);
+  updateVolume();
+  rebuildBeatIndicators();
+  loadPresets();
+  applyLanguage("tr");
+})();
+</script>
+</body>
+</html>
