@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080909">
-<title>RockJazz Profesyonel Metronom V2.6</title>
+<title>RockJazz Profesyonel Metronom V3.4</title>
 <style>
 :root{
   --bg:#080909;--surface:#111313;--surface2:#171918;--surface3:#20221f;
@@ -463,7 +463,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     <button class="help-open-btn" id="openHelpBtn" type="button" data-i18n="helpButton">NASIL KULLANILIR?</button>
     <label class="language-control"><span data-i18n="languageLabel">DİL</span>
       <select id="languageSelect" aria-label="Dil seçimi" data-i18n-aria="languageLabel">
-        <option value="tr" selected>Türkçe</option><option value="en">English</option><option value="ru">Русский</option>
+        <option value="tr" selected>Türkçe</option><option value="ru">Русский</option><option value="en">English</option>
       </select>
     </label>
     <div class="version" data-i18n="versionLabel">V2.6 • STÜDYO</div>
@@ -903,6 +903,19 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       <div>✓ <span data-i18n="upgradeBenefit3">Referans sesi, kalibrasyon, filtre ve stroboskop</span></div>
       <div>✓ <span data-i18n="upgradeBenefit4">Düzenli yeni çalışma programları ve reklamsız kullanım</span></div>
     </div>
+    <section class="music-glossary-preview" style="margin:16px 0;padding:14px;border:1px solid #806333;border-radius:14px;background:linear-gradient(135deg,#211b12,#141615)">
+      <div style="font-weight:900;color:#f0d391;font-size:15px;margin-bottom:5px" data-i18n="glossaryTitle">MÜZİK TERİMLERİ BİLGİ DAĞARCIĞI</div>
+      <p style="font-size:12px;color:#ddd2bd;margin:0 0 10px" data-i18n="glossaryIntro">Temel müzik terimlerini öğren. Başlangıç bilgileri ücretsiz; kapsamlı rehber RockJazz Pro'da.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px">
+        <div style="background:#30291e;border-radius:9px;padding:9px"><b style="color:#f3d69b" data-i18n="glossaryNote">Nota</b><small style="display:block;color:#e6dfd2" data-i18n="glossaryNoteDesc">Müzik sesini ve süresini gösteren işarettir.</small></div>
+        <div style="background:#30291e;border-radius:9px;padding:9px"><b style="color:#f3d69b" data-i18n="glossaryRest">Sus</b><small style="display:block;color:#e6dfd2" data-i18n="glossaryRestDesc">Müzikte belirli süre sessiz kalmayı gösterir.</small></div>
+        <div style="background:#30291e;border-radius:9px;padding:9px"><b style="color:#f3d69b" data-i18n="glossaryDot">Nokta</b><small style="display:block;color:#e6dfd2" data-i18n="glossaryDotDesc">Notanın süresini kendi değerinin yarısı kadar uzatır.</small></div>
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:#fff"><b style="color:#f0d391" data-i18n="glossaryTempoTitle">Metronomdaki tempo terimleri</b><div id="glossaryTempoSamples" style="margin-top:6px;line-height:1.8;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px"></div></div>
+      <div style="margin-top:10px;padding:9px;border-radius:9px;background:#111;color:#d9c9a9;font-size:11px" data-i18n="glossaryProTeaser">🔒 Pro rehberinde: nota süreleri ve suslar, bağlar, tekrar işaretleri, tempo terimleri, nüanslar, artikülasyon ve örnekli mini dersler.</div>
+      <div style="margin-top:8px;color:#d5bd8e;font-size:10px" data-i18n="glossaryLanguageOrder">Dil sırası: Türkçe • Русский • English</div>
+      <img id="tempoGlossaryPoster" alt="Metronom tempo terimleri: Türkçe ve Rusça açıklamalı yüksek çözünürlüklü rehber" loading="lazy" style="display:block;width:100%;height:auto;margin-top:12px;border-radius:12px;border:1px solid #806333" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAwIiBoZWlnaHQ9IjIyMDAiIHZpZXdCb3g9IjAgMCAxODAwIDIyMDAiPgo8ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiMxMDFiMmIiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNjFhMTMiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZCI+PHN0b3Agc3RvcC1jb2xvcj0iI2Y3ZTVhMiIvPjxzdG9wIG9mZnNldD0iLjUiIHN0b3AtY29sb3I9IiNkNWE4NGYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmYwYjgiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjE4MDAiIGhlaWdodD0iMjIwMCIgcng9IjY0IiBmaWxsPSJ1cmwoI2JnKSIvPjxyZWN0IHg9IjM1IiB5PSIzNSIgd2lkdGg9IjE3MzAiIGhlaWdodD0iMjEzMCIgcng9IjQ4IiBmaWxsPSJub25lIiBzdHJva2U9InVybCgjZ29sZCkiIHN0cm9rZS13aWR0aD0iOCIvPgo8dGV4dCB4PSI5MDAiIHk9IjE1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNzYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ1cmwoI2dvbGQpIj5ST0NLSkFaWiDigKIgTcOcWsSwSyBURVLEsE1MRVLEsDwvdGV4dD4KPHRleHQgeD0iOTAwIiB5PSIyMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQyIiBmaWxsPSIjZjRlOGNhIj5NRVRST05PTSBURU1QTyBURVLEsE1MRVLEsCAvINCi0JXQnNCf0J7QktCr0JUg0J7QkdCe0JfQndCQ0KfQldCd0JjQryAvIFRFTVBPIE1BUktJTkdTPC90ZXh0Pgo8dGV4dCB4PSI5MDAiIHk9IjMwNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNkN2M0OWEiPk1ldHJvbm9tdW4ga2VuZGkgdGVtcG8gc8SxbsSxZmxhbmTEsXJtYXPEsW5kYWtpIHRlcmltbGVyIOKAoiDQkdC10Lcg0LTQvtCx0LDQstC70LXQvdC90YvRhSDQvtCx0L7Qt9C90LDRh9C10L3QuNC5IOKAoiBFeGFjdCBhcHAgdGVybXM8L3RleHQ+PHJlY3QgeD0iOTUiIHk9IjM4MCIgd2lkdGg9IjE2MTAiIGhlaWdodD0iMTEyIiByeD0iMjIiIGZpbGw9IiMxODI2MzgiIHN0cm9rZT0iIzk4NzUzZCIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxjaXJjbGUgY3g9IjE2MCIgY3k9IjQzNiIgcj0iMzQiIGZpbGw9IiNkNmFhNTUiLz48dGV4dCB4PSIxNjAiIHk9IjQ0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjM0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzE3MjAyYiI+MTwvdGV4dD4KPHRleHQgeD0iMjMwIiB5PSI0MjciIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2Y1ZDk5MSI+TGFyZ2hpc3NpbW88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iNDIzIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzMCIgZmlsbD0iI2ZmZjFkMiI+VFI6IMOHb2ssIMOnb2sgeWF2YcWfPC90ZXh0Pgo8dGV4dCB4PSI3NTAiIHk9IjQ2MyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjciIGZpbGw9IiNjOWQ5ZWYiPlJVOiDQntGH0LXQvdGMLdC+0YfQtdC90Ywg0LzQtdC00LvQtdC90L3QvjwvdGV4dD48cmVjdCB4PSI5NSIgeT0iNTEyIiB3aWR0aD0iMTYxMCIgaGVpZ2h0PSIxMTIiIHJ4PSIyMiIgZmlsbD0iIzE4MjYzOCIgc3Ryb2tlPSIjOTg3NTNkIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iNTY4IiByPSIzNCIgZmlsbD0iI2Q2YWE1NSIvPjx0ZXh0IHg9IjE2MCIgeT0iNTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTcyMDJiIj4yPC90ZXh0Pgo8dGV4dCB4PSIyMzAiIHk9IjU1OSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZjVkOTkxIj5HcmF2ZTwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSI1NTUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjZmZmMWQyIj5UUjogQcSfxLFyIHZlIGNpZGRpPC90ZXh0Pgo8dGV4dCB4PSI3NTAiIHk9IjU5NSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjciIGZpbGw9IiNjOWQ5ZWYiPlJVOiDQntGH0LXQvdGMINC80LXQtNC70LXQvdC90L4g0Lgg0YLQvtGA0LbQtdGB0YLQstC10L3QvdC+PC90ZXh0PjxyZWN0IHg9Ijk1IiB5PSI2NDQiIHdpZHRoPSIxNjEwIiBoZWlnaHQ9IjExMiIgcng9IjIyIiBmaWxsPSIjMTgyNjM4IiBzdHJva2U9IiM5ODc1M2QiIHN0cm9rZS13aWR0aD0iMyIvPgo8Y2lyY2xlIGN4PSIxNjAiIGN5PSI3MDAiIHI9IjM0IiBmaWxsPSIjZDZhYTU1Ii8+PHRleHQgeD0iMTYwIiB5PSI3MTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNzIwMmIiPjM8L3RleHQ+Cjx0ZXh0IHg9IjIzMCIgeT0iNjkxIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0MiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmNWQ5OTEiPkxhcmdvPC90ZXh0Pgo8dGV4dCB4PSI3NTAiIHk9IjY4NyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmYxZDIiPlRSOiBHZW5pxZ8gdmUgw6dvayB5YXZhxZ88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iNzI3IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNyIgZmlsbD0iI2M5ZDllZiI+UlU6INCo0LjRgNC+0LrQviDQuCDQvtGH0LXQvdGMINC80LXQtNC70LXQvdC90L48L3RleHQ+PHJlY3QgeD0iOTUiIHk9Ijc3NiIgd2lkdGg9IjE2MTAiIGhlaWdodD0iMTEyIiByeD0iMjIiIGZpbGw9IiMxODI2MzgiIHN0cm9rZT0iIzk4NzUzZCIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxjaXJjbGUgY3g9IjE2MCIgY3k9IjgzMiIgcj0iMzQiIGZpbGw9IiNkNmFhNTUiLz48dGV4dCB4PSIxNjAiIHk9Ijg0NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjM0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzE3MjAyYiI+NDwvdGV4dD4KPHRleHQgeD0iMjMwIiB5PSI4MjMiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2Y1ZDk5MSI+TGVudG88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iODE5IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzMCIgZmlsbD0iI2ZmZjFkMiI+VFI6IFlhdmHFn8OnYTwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSI4NTkiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI3IiBmaWxsPSIjYzlkOWVmIj5SVTog0JzQtdC00LvQtdC90L3QvjwvdGV4dD48cmVjdCB4PSI5NSIgeT0iOTA4IiB3aWR0aD0iMTYxMCIgaGVpZ2h0PSIxMTIiIHJ4PSIyMiIgZmlsbD0iIzE4MjYzOCIgc3Ryb2tlPSIjOTg3NTNkIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iOTY0IiByPSIzNCIgZmlsbD0iI2Q2YWE1NSIvPjx0ZXh0IHg9IjE2MCIgeT0iOTc2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTcyMDJiIj41PC90ZXh0Pgo8dGV4dCB4PSIyMzAiIHk9Ijk1NSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZjVkOTkxIj5BZGFnaW88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iOTUxIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzMCIgZmlsbD0iI2ZmZjFkMiI+VFI6IFlhdmHFnyB2ZSByYWhhdDwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSI5OTEiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI3IiBmaWxsPSIjYzlkOWVmIj5SVTog0JzQtdC00LvQtdC90L3QviDQuCDRgdC/0L7QutC+0LnQvdC+PC90ZXh0PjxyZWN0IHg9Ijk1IiB5PSIxMDQwIiB3aWR0aD0iMTYxMCIgaGVpZ2h0PSIxMTIiIHJ4PSIyMiIgZmlsbD0iIzE4MjYzOCIgc3Ryb2tlPSIjOTg3NTNkIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iMTA5NiIgcj0iMzQiIGZpbGw9IiNkNmFhNTUiLz48dGV4dCB4PSIxNjAiIHk9IjExMDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNzIwMmIiPjY8L3RleHQ+Cjx0ZXh0IHg9IjIzMCIgeT0iMTA4NyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZjVkOTkxIj5BZGFnaWV0dG88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iMTA4MyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmYxZDIiPlRSOiBBZGFnaW8mI3gyNztkYW4gYmlyYXogZGFoYSBoxLF6bMSxPC90ZXh0Pgo8dGV4dCB4PSI3NTAiIHk9IjExMjMiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI3IiBmaWxsPSIjYzlkOWVmIj5SVTog0J3QtdC80L3QvtCz0L4g0LHRi9GB0YLRgNC10LUgQWRhZ2lvPC90ZXh0PjxyZWN0IHg9Ijk1IiB5PSIxMTcyIiB3aWR0aD0iMTYxMCIgaGVpZ2h0PSIxMTIiIHJ4PSIyMiIgZmlsbD0iIzE4MjYzOCIgc3Ryb2tlPSIjOTg3NTNkIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iMTIyOCIgcj0iMzQiIGZpbGw9IiNkNmFhNTUiLz48dGV4dCB4PSIxNjAiIHk9IjEyNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNzIwMmIiPjc8L3RleHQ+Cjx0ZXh0IHg9IjIzMCIgeT0iMTIxOSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZjVkOTkxIj5BbmRhbnRlPC90ZXh0Pgo8dGV4dCB4PSI3NTAiIHk9IjEyMTUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjZmZmMWQyIj5UUjogU2FraW5jZSwgecO8csO8ecO8xZ8gdGVtcG9zdW5kYTwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSIxMjU1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNyIgZmlsbD0iI2M5ZDllZiI+UlU6INCSINGD0LzQtdGA0LXQvdC90L7QvCwg0YjQsNCz0L7QstC+0Lwg0YLQtdC80L/QtTwvdGV4dD48cmVjdCB4PSI5NSIgeT0iMTMwNCIgd2lkdGg9IjE2MTAiIGhlaWdodD0iMTEyIiByeD0iMjIiIGZpbGw9IiMxODI2MzgiIHN0cm9rZT0iIzk4NzUzZCIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxjaXJjbGUgY3g9IjE2MCIgY3k9IjEzNjAiIHI9IjM0IiBmaWxsPSIjZDZhYTU1Ii8+PHRleHQgeD0iMTYwIiB5PSIxMzcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTcyMDJiIj44PC90ZXh0Pgo8dGV4dCB4PSIyMzAiIHk9IjEzNTEiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2Y1ZDk5MSI+TW9kZXJhdG88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iMTM0NyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmYxZDIiPlRSOiBPcnRhIGjEsXpkYTwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSIxMzg3IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNyIgZmlsbD0iI2M5ZDllZiI+UlU6INCj0LzQtdGA0LXQvdC90L48L3RleHQ+PHJlY3QgeD0iOTUiIHk9IjE0MzYiIHdpZHRoPSIxNjEwIiBoZWlnaHQ9IjExMiIgcng9IjIyIiBmaWxsPSIjMTgyNjM4IiBzdHJva2U9IiM5ODc1M2QiIHN0cm9rZS13aWR0aD0iMyIvPgo8Y2lyY2xlIGN4PSIxNjAiIGN5PSIxNDkyIiByPSIzNCIgZmlsbD0iI2Q2YWE1NSIvPjx0ZXh0IHg9IjE2MCIgeT0iMTUwNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjM0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzE3MjAyYiI+OTwvdGV4dD4KPHRleHQgeD0iMjMwIiB5PSIxNDgzIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0MiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmNWQ5OTEiPkFsbGVncmV0dG88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iMTQ3OSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmYxZDIiPlRSOiBPcnRhIGRlcmVjZWRlIGjEsXpsxLE8L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iMTUxOSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjciIGZpbGw9IiNjOWQ5ZWYiPlJVOiDQo9C80LXRgNC10L3QvdC+INCx0YvRgdGC0YDQvjwvdGV4dD48cmVjdCB4PSI5NSIgeT0iMTU2OCIgd2lkdGg9IjE2MTAiIGhlaWdodD0iMTEyIiByeD0iMjIiIGZpbGw9IiMxODI2MzgiIHN0cm9rZT0iIzk4NzUzZCIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxjaXJjbGUgY3g9IjE2MCIgY3k9IjE2MjQiIHI9IjM0IiBmaWxsPSIjZDZhYTU1Ii8+PHRleHQgeD0iMTYwIiB5PSIxNjM2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTcyMDJiIj4xMDwvdGV4dD4KPHRleHQgeD0iMjMwIiB5PSIxNjE1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0MiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmNWQ5OTEiPkFsbGVncm88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iMTYxMSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmYxZDIiPlRSOiBIxLF6bMSxLCBuZcWfZWxpIHZlIGNhbmzEsTwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSIxNjUxIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNyIgZmlsbD0iI2M5ZDllZiI+UlU6INCR0YvRgdGC0YDQviwg0YDQsNC00L7RgdGC0L3QviDQuCDQvtC20LjQstC70ZHQvdC90L48L3RleHQ+PHJlY3QgeD0iOTUiIHk9IjE3MDAiIHdpZHRoPSIxNjEwIiBoZWlnaHQ9IjExMiIgcng9IjIyIiBmaWxsPSIjMTgyNjM4IiBzdHJva2U9IiM5ODc1M2QiIHN0cm9rZS13aWR0aD0iMyIvPgo8Y2lyY2xlIGN4PSIxNjAiIGN5PSIxNzU2IiByPSIzNCIgZmlsbD0iI2Q2YWE1NSIvPjx0ZXh0IHg9IjE2MCIgeT0iMTc2OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjM0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzE3MjAyYiI+MTE8L3RleHQ+Cjx0ZXh0IHg9IjIzMCIgeT0iMTc0NyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZjVkOTkxIj5WaXZhY2U8L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iMTc0MyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmYxZDIiPlRSOiBDYW5sxLEgdmUgaMSxemzEsTwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSIxNzgzIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNyIgZmlsbD0iI2M5ZDllZiI+UlU6INCW0LjQstC+INC4INCx0YvRgdGC0YDQvjwvdGV4dD48cmVjdCB4PSI5NSIgeT0iMTgzMiIgd2lkdGg9IjE2MTAiIGhlaWdodD0iMTEyIiByeD0iMjIiIGZpbGw9IiMxODI2MzgiIHN0cm9rZT0iIzk4NzUzZCIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxjaXJjbGUgY3g9IjE2MCIgY3k9IjE4ODgiIHI9IjM0IiBmaWxsPSIjZDZhYTU1Ii8+PHRleHQgeD0iMTYwIiB5PSIxOTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTcyMDJiIj4xMjwvdGV4dD4KPHRleHQgeD0iMjMwIiB5PSIxODc5IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0MiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmNWQ5OTEiPlByZXN0bzwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSIxODc1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzMCIgZmlsbD0iI2ZmZjFkMiI+VFI6IMOHb2sgaMSxemzEsTwvdGV4dD4KPHRleHQgeD0iNzUwIiB5PSIxOTE1IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNyIgZmlsbD0iI2M5ZDllZiI+UlU6INCe0YfQtdC90Ywg0LHRi9GB0YLRgNC+PC90ZXh0PjxyZWN0IHg9Ijk1IiB5PSIxOTY0IiB3aWR0aD0iMTYxMCIgaGVpZ2h0PSIxMTIiIHJ4PSIyMiIgZmlsbD0iIzE4MjYzOCIgc3Ryb2tlPSIjOTg3NTNkIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iMTYwIiBjeT0iMjAyMCIgcj0iMzQiIGZpbGw9IiNkNmFhNTUiLz48dGV4dCB4PSIxNjAiIHk9IjIwMzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxNzIwMmIiPjEzPC90ZXh0Pgo8dGV4dCB4PSIyMzAiIHk9IjIwMTEiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2Y1ZDk5MSI+UHJlc3Rpc3NpbW88L3RleHQ+Cjx0ZXh0IHg9Ijc1MCIgeT0iMjAwNyIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmYxZDIiPlRSOiBPbGFiaWxkacSfaW5jZSBoxLF6bMSxPC90ZXh0Pgo8dGV4dCB4PSI3NTAiIHk9IjIwNDciIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI3IiBmaWxsPSIjYzlkOWVmIj5SVTog0JzQsNC60YHQuNC80LDQu9GM0L3QviDQsdGL0YHRgtGA0L48L3RleHQ+PHRleHQgeD0iOTAwIiB5PSIyMTMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyOCIgZmlsbD0iI2U1Yzc3ZiI+VMO8cmvDp2Ug4oCiINCg0YPRgdGB0LrQuNC5IOKAoiBFbmdsaXNoPC90ZXh0Pjwvc3ZnPg==" />
+    </section>
     <div class="plan-choices">
       <button class="plan-choice" id="monthlyPlanBtn" type="button" aria-pressed="false">
         <span data-i18n="monthlyPlan">AYLIK</span><strong>49,99 TL</strong><small data-i18n="monthlyRenewal">Her ay otomatik yenilenir</small>
@@ -945,7 +958,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
 
   const translations = {
     tr: {
-      languageLabel:"DİL", brandSubtitle:"PROFESYONEL METRONOM", versionLabel:"V2.7 • TEST SÜRÜMÜ", instrumentAria:"Hareketli ahşap mekanik metronom", beatsAria:"Ölçü vuruşları", rhythmTitle:"RİTİM AYARLARI", soundTitle:"SES STÜDYOSU", rampTitle:"TEMPO ANTRENMANI", presetTitle:"KAYITLI TEMPOLAR", instrumentTitle:"MEKANİK SARKAÇLI METRONOM",
+      languageLabel:"DİL", brandSubtitle:"PROFESYONEL METRONOM", versionLabel:"V3.4 • TEST SÜRÜMÜ", instrumentAria:"Hareketli ahşap mekanik metronom", beatsAria:"Ölçü vuruşları", rhythmTitle:"RİTİM AYARLARI", soundTitle:"SES STÜDYOSU", rampTitle:"TEMPO ANTRENMANI", presetTitle:"KAYITLI TEMPOLAR", instrumentTitle:"MEKANİK SARKAÇLI METRONOM",
       currentTempo:"GÜNCEL HIZ • DAKİKADAKİ VURUŞ SAYISI",
       minTempo:"20 BPM",maxTempo:"300 BPM",tapTempo:"RİTMİNE GÖRE AYARLA",
       stopMetronome:"DURDUR",statusReady:"Başlatmak için oynat tuşuna dokunun.",
@@ -1075,6 +1088,17 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       presetDeleted:"Сохранённый темп удалён.",builtinPresets:"ГОТОВЫЕ ТЕМПЫ"
     }
   };
+
+
+  Object.assign(translations.tr, {
+    glossaryTitle:"MÜZİK TERİMLERİ BİLGİ DAĞARCIĞI",glossaryIntro:"Temel müzik terimlerini öğren. Başlangıç bilgileri ücretsiz; kapsamlı rehber RockJazz Pro'da.",glossaryNote:"Nota",glossaryNoteDesc:"Müzik sesini ve süresini gösteren işarettir.",glossaryRest:"Sus",glossaryRestDesc:"Müzikte belirli süre sessiz kalmayı gösterir.",glossaryDot:"Nokta",glossaryDotDesc:"Notanın süresini kendi değerinin yarısı kadar uzatır.",glossaryTempoTitle:"Metronomdaki tempo terimleri",glossaryProTeaser:"🔒 Pro rehberinde: nota süreleri ve suslar, bağlar, tekrar işaretleri, tempo terimleri, nüanslar, artikülasyon ve örnekli mini dersler.",glossaryLanguageOrder:"Dil sırası: Türkçe • Русский • English"
+  });
+  Object.assign(translations.ru, {
+    glossaryTitle:"СПРАВОЧНИК МУЗЫКАЛЬНЫХ ТЕРМИНОВ",glossaryIntro:"Изучайте основные музыкальные термины. Вводные материалы бесплатны; полный справочник доступен в RockJazz Pro.",glossaryNote:"Нота",glossaryNoteDesc:"Знак, обозначающий музыкальный звук и его длительность.",glossaryRest:"Пауза",glossaryRestDesc:"Обозначает определённую длительность тишины в музыке.",glossaryDot:"Точка",glossaryDotDesc:"Увеличивает длительность ноты на половину её значения.",glossaryTempoTitle:"Темповые обозначения из метронома",glossaryProTeaser:"🔒 В справочнике Pro: длительности нот и пауз, лиги, знаки повтора, темповые обозначения, динамика, артикуляция и короткие уроки с примерами.",glossaryLanguageOrder:"Порядок языков: Türkçe • Русский • English"
+  });
+  Object.assign(translations.en, {
+    glossaryTitle:"MUSIC TERMS GLOSSARY",glossaryIntro:"Learn essential music terms. Introductory material is free; the complete guide is in RockJazz Pro.",glossaryNote:"Note",glossaryNoteDesc:"A symbol that represents a musical sound and its duration.",glossaryRest:"Rest",glossaryRestDesc:"A symbol that indicates a measured period of silence.",glossaryDot:"Dot",glossaryDotDesc:"Extends a note by half of its original duration.",glossaryTempoTitle:"Tempo terms used in the metronome",glossaryProTeaser:"🔒 Pro guide: note and rest values, ties, repeat signs, tempo terms, dynamics, articulation and example-based mini lessons.",glossaryLanguageOrder:"Language order: Türkçe • Русский • English"
+  });
 
   const termDescriptions = {
     Larghissimo:["Çok, çok yavaş","Very, very slow","Очень-очень медленно"],
@@ -1287,6 +1311,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     $("topStatus").textContent = isPlaying ? tr("playing") : tr("ready");
     $("statusText").textContent = isPlaying ? tr("playingText").replace("{bpm}",bpm).replace("{term}",getTempoTerm(bpm).name) : tr("statusReady");
     $("languageSelect").value = currentLanguage;
+    renderGlossaryTempoSamples();
     if ($("selectedPlanLine")) selectBillingPlan(selectedBillingPlan || "yearly");
     if ($("tuneStatus") && !tunerRunning) $("tuneStatus").textContent = tr("tunerWaiting");
     bpmSlider.setAttribute("aria-label",currentLanguage==="tr"?"Hız":currentLanguage==="en"?"Tempo":"Темп");
@@ -1311,6 +1336,28 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     {min:168,max:200,name:"Presto",description:"Çok hızlı",priority:2},
     {min:200,max:999,name:"Prestissimo",description:"Olabildiğince hızlı",priority:3}
   ];
+
+  function renderGlossaryTempoSamples() {
+    const target = $("glossaryTempoSamples");
+    if (!target) return;
+    target.replaceChildren();
+    const seen = new Set();
+    // Read directly from the metronome's own tempoTerms array: no duplicated ranges or invented labels.
+    tempoTerms.forEach(term => {
+      if (seen.has(term.name)) return;
+      seen.add(term.name);
+      const row = document.createElement("div");
+      row.style.cssText = "padding:6px 8px;border:1px solid #55452c;border-radius:8px;background:#211c14;min-width:0";
+      const name = document.createElement("strong");
+      name.style.cssText = "display:block;color:#f3d69b;font-size:11px";
+      name.textContent = term.name;
+      const desc = document.createElement("small");
+      desc.style.cssText = "display:block;color:#e6dfd2;font-size:10px";
+      desc.textContent = termDescriptions[term.name][["tr","en","ru"].indexOf(currentLanguage)];
+      row.append(name,desc);
+      target.appendChild(row);
+    });
+  }
 
   let bpm = 120;
   let audioCtx = null;
@@ -1739,17 +1786,41 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     if (tapTimes.length > 6) tapTimes.shift();
     statusText.textContent = tapTimes.length < 2 ? tr("tapAgain") : tr("tapSet").replace("{bpm}",bpm);
   });
-  $("testSoundBtn").addEventListener("click",async () => {
+  let soundPreviewTimer = null;
+  let soundPreviewStopTimer = null;
+  let soundPreviewActive = false;
+  async function toggleSoundPreview() {
+    if (soundPreviewActive) {
+      soundPreviewActive = false;
+      clearInterval(soundPreviewTimer); clearTimeout(soundPreviewStopTimer);
+      soundPreviewTimer = soundPreviewStopTimer = null;
+      $("testSoundBtn").textContent = "♪ SESİ DİNLE";
+      return;
+    }
     try {
       initAudio();
       if (audioCtx.state === "suspended") await audioCtx.resume();
-      const now = audioCtx.currentTime + 0.035;
-      playClick(now,true,false);
-      playClick(now+0.42,false,false);
+      soundPreviewActive = true;
+      $("testSoundBtn").textContent = "■ DİNLEMEYİ DURDUR";
+      let beat = 0;
+      const fire = () => {
+        if (!soundPreviewActive) return;
+        playClick(audioCtx.currentTime + 0.025, beat % Number(numerator.value) === 0, false);
+        beat++;
+      };
+      fire();
+      soundPreviewTimer = window.setInterval(fire, Math.max(80, beatDuration()*1000));
+      soundPreviewStopTimer = window.setTimeout(() => {
+        soundPreviewActive = false; clearInterval(soundPreviewTimer);
+        soundPreviewTimer = soundPreviewStopTimer = null;
+        $("testSoundBtn").textContent = "♪ SESİ DİNLE";
+      },7000);
     } catch (error) {
+      soundPreviewActive = false;
       statusText.textContent = tr("soundTestError") + error.message;
     }
-  });
+  }
+  $("testSoundBtn").addEventListener("click",toggleSoundPreview);
   $("volume").addEventListener("input",updateVolume);
 
   [numerator,denominator,subdivision].forEach(control => {
@@ -1779,6 +1850,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   });
 
   document.addEventListener("visibilitychange",() => {
+    // Audio scheduling remains active while the page is backgrounded; visual animation resumes on return.
     if (!document.hidden && isPlaying && audioCtx) {
       visualLastAudioTime = Math.min(visualLastAudioTime,audioCtx.currentTime);
       cancelAnimationFrame(animationFrame);
@@ -1847,7 +1919,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   // --- Free / Pro product model (HTML preview only; no real billing here) ---
   // V2.7 TEST BUILD: temporarily unlock every Pro feature for QA.
   // Restore the Free/Pro entitlement check before publishing the commercial build.
-  let demoProAccess = true;
+  let demoProAccess = false;
   let selectedBillingPlan = "yearly";
 
   function openProModal(reason = "") {
@@ -1857,6 +1929,11 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     $("proModal").setAttribute("data-reason",reason);
     $("disableDemoProBtn").hidden = !demoProAccess;
     $("demoProBtn").hidden = demoProAccess;
+    const sampleBpm = [60,76,90,120,140,180];
+    $("glossaryTempoSamples").innerHTML = sampleBpm.map(value => {
+      const term = getTempoTerm(value);
+      return `<span style="display:inline-block;margin:2px 5px 2px 0;padding:3px 7px;border:1px solid #705b36;border-radius:7px">${value} BPM · <b>${term.name}</b></span>`;
+    }).join("");
     $("closeProModalBtn").focus();
   }
   function closeProModal() {
@@ -2246,8 +2323,19 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   }
   let tunerToneContext = null;
   let tunerReferenceNodes = [];
+  let tunerReferenceStopTimer = null;
+  function stopTunerReference() {
+    if (tunerToneContext) {
+      const now = tunerToneContext.currentTime;
+      tunerReferenceNodes.forEach(node => { try { node.stop(now); } catch (_) {} });
+    }
+    tunerReferenceNodes = [];
+    clearTimeout(tunerReferenceStopTimer); tunerReferenceStopTimer = null;
+    $("playReferenceBtn").innerHTML = '♪ <span data-i18n="listen">DİNLE</span>';
+  }
   function playTunerReference() {
     if (!demoProAccess) { openProModal("referenceTone"); return; }
+    if (tunerReferenceNodes.length) { stopTunerReference(); return; }
     const profile = activeTunerProfile();
     const target = selectedTunerString >= 0 ? profile.strings[selectedTunerString] :
       (tunerLastFrequency ? getNearestTunerTarget(tunerLastFrequency) : profile.strings[0]);
@@ -2265,17 +2353,18 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       const master = tunerToneContext.createGain();
       master.gain.setValueAtTime(0.0001, now);
       master.gain.exponentialRampToValueAtTime(0.28, now + 0.04);
-      master.gain.setValueAtTime(0.28, now + 9.82);
-      master.gain.exponentialRampToValueAtTime(0.0001, now + 10.0);
+      master.gain.setValueAtTime(0.28, now + 4.82);
+      master.gain.exponentialRampToValueAtTime(0.0001, now + 5.0);
       master.connect(tunerToneContext.destination);
 
       // A clear whistle-like tone plus a gentle upper harmonic helps low strings
       // remain audible on small phone speakers without changing the target pitch.
       const whistle = tunerToneContext.createOscillator();
       const whistleGain = tunerToneContext.createGain();
-      whistle.type = "triangle";
+      whistle.type = "sine";
       whistle.frequency.setValueAtTime(fundamental, now);
-      whistleGain.gain.value = 0.78;
+      whistleGain.gain.setValueAtTime(0.95,now);
+      whistleGain.gain.exponentialRampToValueAtTime(0.62,now+0.22);
       whistle.connect(whistleGain);
       whistleGain.connect(master);
 
@@ -2283,15 +2372,18 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       const harmonicGain = tunerToneContext.createGain();
       harmonic.type = "sine";
       harmonic.frequency.setValueAtTime(fundamental * 2, now);
-      harmonicGain.gain.value = 0.22;
+      harmonicGain.gain.setValueAtTime(0.32,now);
+      harmonicGain.gain.exponentialRampToValueAtTime(0.08,now+0.35);
       harmonic.connect(harmonicGain);
       harmonicGain.connect(master);
 
       [whistle, harmonic].forEach(osc => {
         osc.start(now);
-        osc.stop(now + 10.02);
+        osc.stop(now + 5.02);
       });
       tunerReferenceNodes = [whistle, harmonic];
+      $("playReferenceBtn").innerHTML = "■ <span>DURDUR</span>";
+      tunerReferenceStopTimer = window.setTimeout(stopTunerReference,5000);
     } catch (error) { $("tunerError").textContent = error.message; }
   }
 
