@@ -886,6 +886,20 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   </div>
 </section>
 
+
+<button id="openMusicGlossaryBtn" type="button" style="position:fixed;right:14px;bottom:16px;z-index:9000;background:linear-gradient(135deg,#f5d995,#b9822d);color:#17120b;border:2px solid #fff0c2;border-radius:999px;padding:12px 16px;font-weight:900;box-shadow:0 5px 22px #0008;cursor:pointer">♫ Müzik Terimleri</button>
+<div id="musicGlossaryOverlay" hidden style="position:fixed;inset:0;z-index:10000;background:#080b10f2;overflow-y:auto;padding:16px;box-sizing:border-box">
+  <div style="max-width:920px;margin:0 auto;background:linear-gradient(145deg,#1c2430,#17130f);border:1px solid #b88a43;border-radius:18px;padding:18px;color:#f8f0df;box-shadow:0 15px 50px #000b">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;background:#1c2430;padding:6px 0 12px;z-index:2">
+      <div><div style="font-size:11px;letter-spacing:2px;color:#d9b66d">ROCKJAZZ PRO · TEST MODU</div><h2 id="musicGlossaryHeading" style="margin:4px 0;color:#f5d995;font-size:clamp(21px,4vw,30px)">Müzik Terimleri Bilgi Dağarcığı</h2></div>
+      <button id="closeMusicGlossaryBtn" type="button" aria-label="Kapat" style="font-size:26px;border:0;border-radius:10px;padding:5px 13px;background:#3b3020;color:#fff">×</button>
+    </div>
+    <p id="musicGlossaryIntro" style="color:#d8d0c2;margin-top:0">Müzik dilini öğren; terimleri, işaretleri ve ifade biçimlerini keşfet.</p>
+    <div id="musicGlossaryContent" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:12px"></div>
+    <p style="font-size:12px;color:#c9b58e;margin:18px 0 0">Tempo adları ve BPM aralıkları metronomun kendi tempo sınıflandırmasından alınır.</p>
+  </div>
+</div>
+
 <div class="pro-modal-backdrop" id="proModalBackdrop" hidden></div>
 <section class="pro-modal" id="proModal" role="dialog" aria-modal="true" aria-labelledby="proModalTitle" hidden>
   <div class="pro-modal-head">
@@ -1336,6 +1350,76 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     {min:168,max:200,name:"Presto",description:"Çok hızlı",priority:2},
     {min:200,max:999,name:"Prestissimo",description:"Olabildiğince hızlı",priority:3}
   ];
+
+
+  function renderFullMusicGlossary() {
+    const lang = currentLanguage || "tr";
+    const copy = {
+      tr: {
+        title:"Müzik Terimleri Bilgi Dağarcığı", intro:"Müzik dilini öğren; terimleri, işaretleri ve ifade biçimlerini keşfet.",
+        sections:[
+          ["Nota süreleri", [["Birlik nota","4 vuruş"],["İkilik nota","2 vuruş"],["Dörtlük nota","1 vuruş"],["Sekizlik nota","1/2 vuruş"],["Onaltılık nota","1/4 vuruş"]]],
+          ["Sus işaretleri", [["Birlik sus","4 vuruş sessizlik"],["İkilik sus","2 vuruş sessizlik"],["Dörtlük sus","1 vuruş sessizlik"],["Sekizlik sus","1/2 vuruş sessizlik"],["Onaltılık sus","1/4 vuruş sessizlik"]]],
+          ["Nokta ve bağlar", [["Nokta","Notanın süresini kendi değerinin yarısı kadar uzatır."],["Hece bağı (Legato)","Farklı yükseklikteki notaları kesintisiz ve yumuşak bağlar."],["Uzatma bağı (Tie)","Aynı yükseklikteki notaların sürelerini birleştirir."]]],
+          ["Tekrar işaretleri", [["D.C. (Da Capo)","Başa dön ve tekrar çal."],["D.S. (Dal Segno)","Segno işaretine dön."],["Fine","Eserin bitiş noktası."],["Coda","Özel bitiş bölümüne geçiş işareti."],["1. ve 2. dolap","Tekrarda farklı bitişleri gösterir."]]],
+          ["Dinamik terimleri", [["pp – Pianissimo","Çok hafif"],["p – Piano","Hafif"],["mp – Mezzo Piano","Orta hafif"],["mf – Mezzo Forte","Orta güçlü"],["f – Forte","Güçlü"],["ff – Fortissimo","Çok güçlü"],["Crescendo","Ses şiddeti giderek artar."],["Decrescendo","Ses şiddeti giderek azalır."]]],
+          ["Artikülasyon ve ifade", [["Staccato","Notayı kısa ve kesik çal."],["Accent","Notayı vurgulu çal."],["Tenuto","Notayı tam değeriyle ve belirgin çal."],["Fermata","Notayı bekleterek uzat."],["Tril","İki komşu ses arasında hızlı titreşim yap."],["Portamento","Bir sesten diğerine kayarak geç."]]]
+        ],
+        tempo:"Metronomun tempo terimleri", bpm:"BPM aralığı", meaning:"Anlamı"
+      },
+      ru: {
+        title:"Справочник музыкальных терминов", intro:"Изучайте музыкальный язык: термины, обозначения и способы исполнения.",
+        sections:[
+          ["Длительность нот", [["Целая нота","4 доли"],["Половинная нота","2 доли"],["Четвертная нота","1 доля"],["Восьмая нота","1/2 доли"],["Шестнадцатая нота","1/4 доли"]]],
+          ["Паузы", [["Целая пауза","4 доли тишины"],["Половинная пауза","2 доли тишины"],["Четвертная пауза","1 доля тишины"],["Восьмая пауза","1/2 доли тишины"],["Шестнадцатая пауза","1/4 доли тишины"]]],
+          ["Точка и лиги", [["Точка","Увеличивает длительность ноты на половину её значения."],["Лига (Legato)","Плавно соединяет ноты разной высоты."],["Лига продления (Tie)","Объединяет длительности нот одинаковой высоты."]]],
+          ["Знаки повтора", [["D.C. (Da Capo)","Вернуться к началу и повторить."],["D.S. (Dal Segno)","Вернуться к знаку Segno."],["Fine","Место окончания произведения."],["Coda","Переход к заключительному разделу."],["1-я и 2-я вольты","Разные окончания при повторе."]]],
+          ["Динамические обозначения", [["pp – Pianissimo","Очень тихо"],["p – Piano","Тихо"],["mp – Mezzo Piano","Умеренно тихо"],["mf – Mezzo Forte","Умеренно громко"],["f – Forte","Громко"],["ff – Fortissimo","Очень громко"],["Crescendo","Постепенно увеличивать громкость."],["Decrescendo","Постепенно уменьшать громкость."]]],
+          ["Артикуляция и выразительность", [["Staccato","Играть коротко и отрывисто."],["Accent","Выделять ноту акцентом."],["Tenuto","Выдерживать полную длительность ноты."],["Fermata","Продлить ноту."],["Trill","Быстро чередовать соседние звуки."],["Portamento","Плавно скользить от одного звука к другому."]]]
+        ],
+        tempo:"Темповые термины метронома", bpm:"Диапазон BPM", meaning:"Значение"
+      },
+      en: {
+        title:"Music Terms Knowledge Guide", intro:"Learn the language of music: terms, symbols and expressive techniques.",
+        sections:[
+          ["Note durations", [["Whole note","4 beats"],["Half note","2 beats"],["Quarter note","1 beat"],["Eighth note","1/2 beat"],["Sixteenth note","1/4 beat"]]],
+          ["Rests", [["Whole rest","4 beats of silence"],["Half rest","2 beats of silence"],["Quarter rest","1 beat of silence"],["Eighth rest","1/2 beat of silence"],["Sixteenth rest","1/4 beat of silence"]]],
+          ["Dots and ties", [["Dot","Adds half of the note's original value."],["Slur (Legato)","Connects different pitches smoothly."],["Tie","Combines the durations of notes of the same pitch."]]],
+          ["Repeat signs", [["D.C. (Da Capo)","Return to the beginning and repeat."],["D.S. (Dal Segno)","Return to the Segno sign."],["Fine","The ending point."],["Coda","Move to the special ending section."],["1st and 2nd endings","Show alternate endings on a repeat."]]],
+          ["Dynamics", [["pp – Pianissimo","Very soft"],["p – Piano","Soft"],["mp – Mezzo Piano","Moderately soft"],["mf – Mezzo Forte","Moderately loud"],["f – Forte","Loud"],["ff – Fortissimo","Very loud"],["Crescendo","Gradually get louder."],["Decrescendo","Gradually get softer."]]],
+          ["Articulation and expression", [["Staccato","Play short and detached."],["Accent","Emphasize the note."],["Tenuto","Hold the full note value."],["Fermata","Hold the note longer."],["Trill","Rapidly alternate neighboring notes."],["Portamento","Slide smoothly between pitches."]]]
+        ],
+        tempo:"Metronome tempo terms", bpm:"BPM range", meaning:"Meaning"
+      }
+    };
+    const c = copy[lang] || copy.tr;
+    $("musicGlossaryHeading").textContent = c.title;
+    $("musicGlossaryIntro").textContent = c.intro;
+    const host = $("musicGlossaryContent");
+    host.replaceChildren();
+    const card = (title, rows) => {
+      const el = document.createElement("section");
+      el.style.cssText = "background:#252b33;border:1px solid #78603a;border-radius:13px;padding:12px;min-width:0";
+      const h = document.createElement("h3"); h.textContent = title; h.style.cssText = "color:#f5d995;margin:0 0 9px;font-size:16px"; el.append(h);
+      rows.forEach(([name, desc]) => {
+        const row = document.createElement("div"); row.style.cssText = "padding:7px 0;border-top:1px solid #ffffff20";
+        const b = document.createElement("b"); b.textContent = name; b.style.color = "#fff0c7";
+        const p = document.createElement("div"); p.textContent = desc; p.style.cssText = "font-size:13px;color:#d9d2c5;margin-top:3px;line-height:1.45";
+        row.append(b,p); el.append(row);
+      });
+      host.append(el);
+    };
+    c.sections.forEach(([title, rows]) => card(title, rows));
+    const tempoRows = [];
+    const seen = new Set();
+    tempoTerms.forEach(t => {
+      if (seen.has(t.name)) return;
+      seen.add(t.name);
+      const range = `${t.min}–${t.max >= 999 ? "∞" : t.max} BPM`;
+      tempoRows.push([`${t.name} · ${range}`, t.description]);
+    });
+    card(c.tempo, tempoRows);
+  }
 
   function renderGlossaryTempoSamples() {
     const target = $("glossaryTempoSamples");
@@ -1890,6 +1974,24 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   $("openProBtn").addEventListener("click",() => openProModal("header"));
   $("openProFromTunerBtn").addEventListener("click",() => openProModal("tuner"));
   $("openProBtn").addEventListener("keydown",event => { if(event.key==="Enter") openProModal("header"); });
+
+
+  $("openMusicGlossaryBtn").addEventListener("click",() => {
+    closeProModal();
+    renderFullMusicGlossary();
+    $("musicGlossaryOverlay").hidden = false;
+    document.body.style.overflow = "hidden";
+  });
+  $("closeMusicGlossaryBtn").addEventListener("click",() => {
+    $("musicGlossaryOverlay").hidden = true;
+    document.body.style.overflow = "";
+  });
+  $("musicGlossaryOverlay").addEventListener("click",event => {
+    if (event.target.id === "musicGlossaryOverlay") {
+      $("musicGlossaryOverlay").hidden = true;
+      document.body.style.overflow = "";
+    }
+  });
 
   $("closeProModalBtn").addEventListener("click",closeProModal);
   $("proModalBackdrop").addEventListener("click",closeProModal);
