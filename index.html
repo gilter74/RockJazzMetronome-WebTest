@@ -958,7 +958,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
 
   const translations = {
     tr: {
-      languageLabel:"DİL", brandSubtitle:"PROFESYONEL METRONOM", versionLabel:"V3.4 • TEST SÜRÜMÜ", instrumentAria:"Hareketli ahşap mekanik metronom", beatsAria:"Ölçü vuruşları", rhythmTitle:"RİTİM AYARLARI", soundTitle:"SES STÜDYOSU", rampTitle:"TEMPO ANTRENMANI", presetTitle:"KAYITLI TEMPOLAR", instrumentTitle:"MEKANİK SARKAÇLI METRONOM",
+      languageLabel:"DİL", brandSubtitle:"PROFESYONEL METRONOM", versionLabel:"V3.5 • PRO TEST SÜRÜMÜ", instrumentAria:"Hareketli ahşap mekanik metronom", beatsAria:"Ölçü vuruşları", rhythmTitle:"RİTİM AYARLARI", soundTitle:"SES STÜDYOSU", rampTitle:"TEMPO ANTRENMANI", presetTitle:"KAYITLI TEMPOLAR", instrumentTitle:"MEKANİK SARKAÇLI METRONOM",
       currentTempo:"GÜNCEL HIZ • DAKİKADAKİ VURUŞ SAYISI",
       minTempo:"20 BPM",maxTempo:"300 BPM",tapTempo:"RİTMİNE GÖRE AYARLA",
       stopMetronome:"DURDUR",statusReady:"Başlatmak için oynat tuşuna dokunun.",
@@ -1035,7 +1035,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       tapSet:"Tap tempo: {bpm} BPM",soundTestError:"Sound test failed: ",startError:"Could not start audio: ",
       needPresetName:"Enter a name for the saved tempo first.",playingText:"Playing • {bpm} BPM • {term}",
       savePresetButton:"+ SAVE TEMPO",
-      brandSubtitle:"PROFESSIONAL METRONOME",versionLabel:"V2.7 • TEST BUILD",instrumentAria:"Moving wooden mechanical metronome",beatsAria:"Bar beats",
+      brandSubtitle:"PROFESSIONAL METRONOME",versionLabel:"V3.5 • PRO TEST BUILD",instrumentAria:"Moving wooden mechanical metronome",beatsAria:"Bar beats",
       rhythmTitle:"RHYTHM SETTINGS",soundTitle:"SOUND STUDIO",rampTitle:"TEMPO TRAINING",presetTitle:"SAVED TEMPOS",
       helpButton:"HOW TO USE",guideLabel:"USER GUIDE",closeGuide:"Close guide",
       presetApply:"APPLY",presetDelete:"DELETE",presetEmpty:"You have not saved a custom tempo yet.",
@@ -1919,7 +1919,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   // --- Free / Pro product model (HTML preview only; no real billing here) ---
   // V2.7 TEST BUILD: temporarily unlock every Pro feature for QA.
   // Restore the Free/Pro entitlement check before publishing the commercial build.
-  let demoProAccess = false;
+  let demoProAccess = true; // TEST BUILD: all Pro features stay unlocked by default until commercial release.
   let selectedBillingPlan = "yearly";
 
   function openProModal(reason = "") {
