@@ -2244,6 +2244,8 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     $("tuneStatus").className = "tune-status waiting";
     $("tuneStatus").textContent = tr("tunerWaiting");
   }
+  let tunerToneContext = null;
+  let tunerReferenceNodes = [];
   function playTunerReference() {
     if (!demoProAccess) { openProModal("referenceTone"); return; }
     const profile = activeTunerProfile();
@@ -2254,18 +2256,44 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (!tunerToneContext) tunerToneContext = new AudioContextClass();
       if (tunerToneContext.state === "suspended") tunerToneContext.resume();
-      const oscillator = tunerToneContext.createOscillator();
-      const gain = tunerToneContext.createGain();
-      oscillator.type = "sine";
-      oscillator.frequency.value = target[2] * tunerCalibration / 440;
-      gain.gain.setValueAtTime(0.0001,tunerToneContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.12,tunerToneContext.currentTime+0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001,tunerToneContext.currentTime+1.2);
-      oscillator.connect(gain); gain.connect(tunerToneContext.destination);
-      oscillator.start(); oscillator.stop(tunerToneContext.currentTime+1.25);
+      const now = tunerToneContext.currentTime;
+      // Stop a previous reference tone before starting the new one.
+      tunerReferenceNodes.forEach(node => { try { node.stop(now); } catch (_) {} });
+      tunerReferenceNodes = [];
+
+      const fundamental = target[2] * tunerCalibration / 440;
+      const master = tunerToneContext.createGain();
+      master.gain.setValueAtTime(0.0001, now);
+      master.gain.exponentialRampToValueAtTime(0.28, now + 0.04);
+      master.gain.setValueAtTime(0.28, now + 9.82);
+      master.gain.exponentialRampToValueAtTime(0.0001, now + 10.0);
+      master.connect(tunerToneContext.destination);
+
+      // A clear whistle-like tone plus a gentle upper harmonic helps low strings
+      // remain audible on small phone speakers without changing the target pitch.
+      const whistle = tunerToneContext.createOscillator();
+      const whistleGain = tunerToneContext.createGain();
+      whistle.type = "triangle";
+      whistle.frequency.setValueAtTime(fundamental, now);
+      whistleGain.gain.value = 0.78;
+      whistle.connect(whistleGain);
+      whistleGain.connect(master);
+
+      const harmonic = tunerToneContext.createOscillator();
+      const harmonicGain = tunerToneContext.createGain();
+      harmonic.type = "sine";
+      harmonic.frequency.setValueAtTime(fundamental * 2, now);
+      harmonicGain.gain.value = 0.22;
+      harmonic.connect(harmonicGain);
+      harmonicGain.connect(master);
+
+      [whistle, harmonic].forEach(osc => {
+        osc.start(now);
+        osc.stop(now + 10.02);
+      });
+      tunerReferenceNodes = [whistle, harmonic];
     } catch (error) { $("tunerError").textContent = error.message; }
   }
-  let tunerToneContext = null;
 
   function setTunerMode(mode) {
     tunerMode = mode;
