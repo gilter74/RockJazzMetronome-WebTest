@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#080909">
-<title>RockJazz Profesyonel Metronom V3.4</title>
+<meta name="theme-color" content="#080d16">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<title>RockJazz MetroTuner</title>
 <style>
 :root{
   --bg:#080909;--surface:#111313;--surface2:#171918;--surface3:#20221f;
@@ -446,27 +449,51 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   }
 }
 
+
+/* MetroTuner Firebase account & license panel */
+.account-backdrop{position:fixed;inset:0;background:#000d;z-index:11000;backdrop-filter:blur(6px)}
+.account-modal{position:fixed;z-index:11001;top:50%;left:50%;transform:translate(-50%,-50%);width:min(680px,calc(100vw - 22px));max-height:92vh;overflow:auto;padding:20px;border:1px solid #6f7890;border-radius:18px;background:linear-gradient(145deg,#171e2a,#0c1119);box-shadow:0 24px 80px #000e;color:#f1f4f8}
+.account-modal[hidden],.account-backdrop[hidden]{display:none!important}
+.account-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}
+.account-head h2{margin:0;color:#e0e6ef;font-size:21px}
+.account-panel{border:1px solid #394354;background:#111925;border-radius:13px;padding:13px;margin-top:12px}
+.account-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.account-grid input,.account-grid select,.account-panel input,.account-panel select{width:100%;min-width:0;background:#080e17;color:#f5f7fb;border:1px solid #46546a;border-radius:8px;padding:11px;font-size:12px}
+.account-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.account-actions button,.account-panel button{border:1px solid #78859b;background:linear-gradient(135deg,#35445b,#1a2535);color:#f5f7fb;border-radius:8px;padding:10px 13px;font-size:11px;font-weight:800;cursor:pointer}
+.account-actions .primary,.account-panel .primary{background:linear-gradient(135deg,#d8e0ec,#8899b1);border-color:#edf2f8;color:#111927}
+.account-message{font-size:11px;line-height:1.5;min-height:18px;color:#aebbd0;margin-top:9px;white-space:pre-wrap;overflow-wrap:anywhere}
+.account-status{display:inline-flex;align-items:center;gap:6px;border:1px solid #52677e;border-radius:99px;padding:6px 9px;color:#d4e1f0;font-size:10px;font-weight:850}
+.account-status.pro{color:#d9eaff;border-color:#88a9d7;background:#1a2b43}
+.account-users{display:grid;gap:8px;margin-top:10px}
+.account-user{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px;border:1px solid #344153;border-radius:9px;background:#0b121d}
+.account-user small{display:block;color:#9eacc0;overflow-wrap:anywhere;margin-top:3px}
+.account-user button{padding:7px 9px}
+.account-note{font-size:10px;color:#9eacc0;line-height:1.55;margin:8px 0 0}
+@media(max-width:560px){.account-modal{padding:14px}.account-grid{grid-template-columns:1fr}.account-user{grid-template-columns:1fr}.account-user button{width:100%}}
+
 </style>
 </head>
 <body>
 <div class="app">
 <header>
   <div class="brand">
-    <div class="brand-mark">♩</div>
-    <div><h1>ROCKJAZZ</h1><small data-i18n="brandSubtitle">PROFESYONEL METRONOM</small></div>
+    <div class="brand-mark"><img src="rockjazz-metrotuner-192.png" alt="RockJazz MetroTuner" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+    <div><h1>ROCKJAZZ METROTUNER</h1><small data-i18n="brandSubtitle">PROFESSIONAL METRONOME &amp; TUNER</small></div>
   </div>
   <div class="header-right">
     <div class="status-pill" id="topStatus">HAZIR</div>
     <button class="header-nav active" id="showMetronomeBtn" type="button" data-i18n="navMetronome">METRONOM</button>
     <button class="header-nav" id="showTunerBtn" type="button" data-i18n="navTuner">AKORT</button>
     <button class="pro-header-btn" id="openProBtn" type="button" data-i18n="navPro">PRO'YU KEŞFET</button>
+    <button class="header-nav" id="openAccountBtn" type="button">HESAP / PRO</button>
     <button class="help-open-btn" id="openHelpBtn" type="button" data-i18n="helpButton">NASIL KULLANILIR?</button>
     <label class="language-control"><span data-i18n="languageLabel">DİL</span>
       <select id="languageSelect" aria-label="Dil seçimi" data-i18n-aria="languageLabel">
         <option value="tr" selected>Türkçe</option><option value="ru">Русский</option><option value="en">English</option>
       </select>
     </label>
-    <div class="version" data-i18n="versionLabel">V2.6 • STÜDYO</div>
+    <div class="version">V3.7 • FIREBASE</div>
   </div>
 </header>
 
@@ -768,7 +795,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   <span class="ad-tag" data-i18n="adLabel">REKLAM</span>
   <span data-i18n="adText">Ücretsiz sürümü destekleyen sınırlı reklam alanı</span>
 </div>
-<footer data-i18n="footer">ROCKJAZZ PROFESYONEL METRONOM • HASSASİYET • ZAMANLAMA • MÜZİKSELLİK</footer>
+<footer data-i18n="footer">ROCKJAZZ METROTUNER • RİTİM • ZAMANLAMA • AKORT</footer>
 </div>
 
 <section id="tunerView" class="tuner-view" hidden>
@@ -891,7 +918,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
 <div id="musicGlossaryOverlay" hidden style="position:fixed;inset:0;z-index:10000;background:#080b10f2;overflow-y:auto;padding:16px;box-sizing:border-box">
   <div style="max-width:920px;margin:0 auto;background:linear-gradient(145deg,#1c2430,#17130f);border:1px solid #b88a43;border-radius:18px;padding:18px;color:#f8f0df;box-shadow:0 15px 50px #000b">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;background:#1c2430;padding:6px 0 12px;z-index:2">
-      <div><div style="font-size:11px;letter-spacing:2px;color:#d9b66d">ROCKJAZZ PRO · TEST MODU</div><h2 id="musicGlossaryHeading" style="margin:4px 0;color:#f5d995;font-size:clamp(21px,4vw,30px)">Müzik Terimleri Bilgi Dağarcığı</h2></div>
+      <div><div style="font-size:11px;letter-spacing:2px;color:#d9b66d">ROCKJAZZ METROTUNER · PRO REHBERİ</div><h2 id="musicGlossaryHeading" style="margin:4px 0;color:#f5d995;font-size:clamp(21px,4vw,30px)">Müzik Terimleri Bilgi Dağarcığı</h2></div>
       <button id="closeMusicGlossaryBtn" type="button" aria-label="Kapat" style="font-size:26px;border:0;border-radius:10px;padding:5px 13px;background:#3b3020;color:#fff">×</button>
     </div>
     <p id="musicGlossaryIntro" style="color:#d8d0c2;margin-top:0">Müzik dilini öğren; terimleri, işaretleri ve ifade biçimlerini keşfet.</p>
@@ -943,10 +970,55 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     <button class="purchase-btn" id="purchaseProBtn" type="button" data-i18n="purchaseContinue">SATIN ALMAYA DEVAM ET</button>
     <button class="restore-btn" id="restorePurchasesBtn" type="button" data-i18n="restorePurchases">Satın alımları geri yükle</button>
     <div class="billing-disclosure" data-i18n="billingDisclosure">Üyelik otomatik yenilenir. Ücret, satın alma onayında gösterilir. Yenileme tarihinden önce Google Play üzerinden iptal edilebilir.</div>
-    <div class="prototype-note" data-i18n="prototypeNote">Bu HTML prototipinde gerçek ödeme alınmaz. Satın alma Android sürümünde Google Play Faturalandırma ile bağlanacaktır.</div>
-    <button class="demo-pro-btn" id="demoProBtn" type="button" data-i18n="demoPro">PRO ÖZELLİKLERİNİ DEMO OLARAK ÖNİZLE</button>
-    <button class="demo-reset-btn" id="disableDemoProBtn" type="button" data-i18n="disableDemoPro" hidden>DEMO PRO ERİŞİMİNİ KAPAT</button>
+    <div class="prototype-note" data-i18n="prototypeNote">Bu sürümde satın alma henüz etkin değil. Pro erişimi yönetici tarafından verilen lisans veya aktivasyon koduyla açılır.</div>
+    <button class="demo-pro-btn" id="demoProBtn" type="button" hidden>DEMO DISABLED</button>
+    <button class="demo-reset-btn" id="disableDemoProBtn" type="button" hidden>DEMO DISABLED</button>
   </div>
+</section>
+
+
+<div class="account-backdrop" id="accountBackdrop" hidden></div>
+<section class="account-modal" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle" hidden>
+  <div class="account-head">
+    <div><div class="section-kicker">ROCKJAZZ METROTUNER</div><h2 id="accountModalTitle">Hesap ve Pro Lisansı</h2></div>
+    <button class="drawer-close" id="closeAccountBtn" type="button" aria-label="Kapat">×</button>
+  </div>
+  <div class="account-panel" id="authPanel">
+    <div style="font-weight:900;color:#dce6f4;margin-bottom:9px">Hesap oluştur veya giriş yap</div>
+    <div class="account-grid">
+      <input id="accountName" type="text" autocomplete="name" placeholder="Adınız (kayıt için)">
+      <input id="accountEmail" type="email" autocomplete="email" placeholder="E-posta adresi">
+      <input id="accountPassword" type="password" autocomplete="current-password" placeholder="Şifre (en az 6 karakter)">
+    </div>
+    <div class="account-actions"><button class="primary" id="registerAccountBtn" type="button">Hesap oluştur</button><button id="loginAccountBtn" type="button">Giriş yap</button></div>
+    <div class="account-message" id="authMessage" aria-live="polite"></div>
+    <p class="account-note">E-posta ve şifre Firebase Authentication ile doğrulanır. Şifreniz RockJazz tarafından görüntülenemez.</p>
+  </div>
+  <div class="account-panel" id="signedInPanel" hidden>
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap">
+      <div><b id="accountDisplayName">Kullanıcı</b><small id="accountEmailLabel" style="display:block;color:#aebbd0;margin-top:4px"></small></div>
+      <span id="accountProBadge" class="account-status">FREE</span>
+    </div>
+    <div class="account-message" id="accountLicenseInfo"></div>
+    <div class="account-actions"><button id="logoutAccountBtn" type="button">Çıkış yap</button></div>
+  </div>
+  <div class="account-panel" id="redeemPanel" hidden>
+    <div style="font-weight:900;color:#dce6f4;margin-bottom:8px">Aktivasyon kodu</div>
+    <div class="account-grid"><input id="licenseCodeInput" type="text" autocomplete="off" placeholder="Örnek: A1B2C3D4E5F6"><button class="primary" id="redeemLicenseBtn" type="button">Pro lisansını etkinleştir</button></div>
+    <div class="account-message" id="redeemMessage" aria-live="polite"></div>
+  </div>
+  <div class="account-panel" id="adminPanel" hidden>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b style="color:#dce6f4">Yönetici Pro Paneli</b><span class="account-status pro">ADMIN</span></div>
+    <p class="account-note">Bu panel yalnızca Firebase'de role=admin olarak tanımlanmış kullanıcıya görünür.</p>
+    <div style="font-weight:800;margin:12px 0 7px">Aktivasyon kodu oluştur</div>
+    <div class="account-grid"><select id="licenseDuration"><option value="30">30 gün</option><option value="90">90 gün</option><option value="365">1 yıl</option><option value="0">Süresiz</option></select><button class="primary" id="createLicenseCodeBtn" type="button">Kod oluştur</button></div>
+    <div class="account-message" id="createdCodeMessage" aria-live="polite"></div>
+    <div style="font-weight:800;margin:15px 0 7px">Kayıtlı kullanıcılar</div>
+    <div class="account-actions"><button id="refreshUsersBtn" type="button">Listeyi yenile</button><select id="adminGrantDuration" aria-label="Pro süresi" style="max-width:150px"><option value="30">30 gün</option><option value="90">90 gün</option><option value="365">1 yıl</option><option value="0">Süresiz</option></select></div>
+    <div class="account-users" id="adminUsersList"></div>
+    <div class="account-message" id="adminMessage" aria-live="polite"></div>
+  </div>
+  <p class="account-note">Lisanslar merkezi olarak doğrulanır. Kullanıcı başka bir cihazda aynı hesapla giriş yaptığında da yetkisi geçerli olur. İnternet bağlantısı gerekir.</p>
 </section>
 
 </div>
@@ -972,7 +1044,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
 
   const translations = {
     tr: {
-      languageLabel:"DİL", brandSubtitle:"PROFESYONEL METRONOM", versionLabel:"V3.5 • PRO TEST SÜRÜMÜ", instrumentAria:"Hareketli ahşap mekanik metronom", beatsAria:"Ölçü vuruşları", rhythmTitle:"RİTİM AYARLARI", soundTitle:"SES STÜDYOSU", rampTitle:"TEMPO ANTRENMANI", presetTitle:"KAYITLI TEMPOLAR", instrumentTitle:"MEKANİK SARKAÇLI METRONOM",
+      languageLabel:"DİL", brandSubtitle:"PROFESYONEL METRONOM VE AKORT", versionLabel:"V3.5 • PRO TEST SÜRÜMÜ", instrumentAria:"Hareketli ahşap mekanik metronom", beatsAria:"Ölçü vuruşları", rhythmTitle:"RİTİM AYARLARI", soundTitle:"SES STÜDYOSU", rampTitle:"TEMPO ANTRENMANI", presetTitle:"KAYITLI TEMPOLAR", instrumentTitle:"MEKANİK SARKAÇLI METRONOM",
       currentTempo:"GÜNCEL HIZ • DAKİKADAKİ VURUŞ SAYISI",
       minTempo:"20 BPM",maxTempo:"300 BPM",tapTempo:"RİTMİNE GÖRE AYARLA",
       stopMetronome:"DURDUR",statusReady:"Başlatmak için oynat tuşuna dokunun.",
@@ -1001,7 +1073,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       helpRamp:"Tempo antrenmanı: Kademeli değişimi aç; hızlandırma veya yavaşlatmayı, kaç ölçüde bir ve kaç BPM değişeceğini belirle.",
       helpPreset:"Tempo kaydet: Bir ad yazıp kaydet. Sonraki çalışmalarda kayıtlı tempona tek dokunuşla dönebilirsin.",
       helpTip:"İpucu: Önce rahatça takip edebildiğin yavaş bir hız seç. Vuruşlar düzenli oturduğunda tempoyu küçük adımlarla artır.",
-      footer:"ROCKJAZZ PROFESYONEL METRONOM • HASSASİYET • ZAMANLAMA • MÜZİKSELLİK",
+      footer:"ROCKJAZZ METROTUNER • RİTİM • ZAMANLAMA • AKORT",
       meterQuarter:"DÖRTLÜK",meterEighth:"SEKİZLİK",meterTriplet:"ÜÇLEME",meterSixteenth:"ONALTILIK",
       ready:"HAZIR",playing:"ÇALIYOR",stopped:"Durduruldu",tapAgain:"Ritmi belirlemek için tekrar dokunun.",
       tapSet:"Ritme göre tempo: {bpm} BPM",soundTestError:"Ses testi yapılamadı: ",startError:"Ses başlatılamadı: ",
@@ -1043,13 +1115,13 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       helpRamp:"Tempo training: Enable gradual change, choose speed up or slow down, then set how many bars pass between changes and the BPM step.",
       helpPreset:"Save a tempo: Enter a name and save it. You can return to that tempo with one tap later.",
       helpTip:"Tip: Start at a comfortable, slower tempo. Once the beats feel steady, increase the speed in small steps.",
-      footer:"ROCKJAZZ PROFESSIONAL METRONOME • PRECISION • TIMING • MUSICALITY",
+      footer:"ROCKJAZZ METROTUNER • RHYTHM • TIMING • TUNING",
       meterQuarter:"QUARTER NOTE",meterEighth:"EIGHTH NOTE",meterTriplet:"TRIPLET",meterSixteenth:"SIXTEENTH NOTE",
       ready:"READY",playing:"PLAYING",stopped:"Stopped",tapAgain:"Tap again at a steady pace.",
       tapSet:"Tap tempo: {bpm} BPM",soundTestError:"Sound test failed: ",startError:"Could not start audio: ",
       needPresetName:"Enter a name for the saved tempo first.",playingText:"Playing • {bpm} BPM • {term}",
       savePresetButton:"+ SAVE TEMPO",
-      brandSubtitle:"PROFESSIONAL METRONOME",versionLabel:"V3.5 • PRO TEST BUILD",instrumentAria:"Moving wooden mechanical metronome",beatsAria:"Bar beats",
+      brandSubtitle:"PROFESSIONAL METRONOME & TUNER",versionLabel:"V3.5 • PRO TEST BUILD",instrumentAria:"Moving wooden mechanical metronome",beatsAria:"Bar beats",
       rhythmTitle:"RHYTHM SETTINGS",soundTitle:"SOUND STUDIO",rampTitle:"TEMPO TRAINING",presetTitle:"SAVED TEMPOS",
       helpButton:"HOW TO USE",guideLabel:"USER GUIDE",closeGuide:"Close guide",
       presetApply:"APPLY",presetDelete:"DELETE",presetEmpty:"You have not saved a custom tempo yet.",
@@ -1093,7 +1165,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
       tapSet:"Темп по касаниям: {bpm} BPM",soundTestError:"Ошибка проверки звука: ",startError:"Не удалось запустить звук: ",
       needPresetName:"Сначала введите название для сохранения темпа.",playingText:"Играет • {bpm} BPM • {term}",
       savePresetButton:"+ СОХРАНИТЬ ТЕМП",
-      brandSubtitle:"ПРОФЕССИОНАЛЬНЫЙ МЕТРОНОМ",versionLabel:"V2.6 • СТУДИЯ",instrumentAria:"Деревянный механический метроном с движущимся маятником",beatsAria:"Доли такта",
+      brandSubtitle:"МЕТРОНОМ И ТЮНЕР",versionLabel:"V2.6 • СТУДИЯ",instrumentAria:"Деревянный механический метроном с движущимся маятником",beatsAria:"Доли такта",
       rhythmTitle:"НАСТРОЙКИ РИТМА",soundTitle:"НАСТРОЙКИ ЗВУКА",rampTitle:"ТРЕНИРОВКА ТЕМПА",presetTitle:"СОХРАНЁННЫЕ ТЕМПЫ",
       helpButton:"КАК ПОЛЬЗОВАТЬСЯ?",guideLabel:"РУКОВОДСТВО",closeGuide:"Закрыть руководство",
       presetApply:"ПРИМЕНИТЬ",presetDelete:"УДАЛИТЬ",presetEmpty:"Вы ещё не сохранили свой темп.",
@@ -1161,7 +1233,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     selectedMonthPlan:"Aylık plan seçildi: 49,99 TL / ay.",
     purchaseContinue:"SATIN ALMAYA DEVAM ET",restorePurchases:"Satın alımları geri yükle",
     billingDisclosure:"Üyelik otomatik yenilenir. Ücret, satın alma onayında gösterilir. Yenileme tarihinden önce Google Play üzerinden iptal edilebilir.",
-    prototypeNote:"Bu HTML prototipinde gerçek ödeme alınmaz. Satın alma Android sürümünde Google Play Faturalandırma ile bağlanacaktır.",
+    prototypeNote:"Bu sürümde satın alma henüz etkin değil. Pro erişimi yönetici tarafından verilen lisans veya aktivasyon koduyla açılır.",
     demoPro:"PRO ÖZELLİKLERİNİ DEMO OLARAK ÖNİZLE",disableDemoPro:"DEMO PRO ERİŞİMİNİ KAPAT",
     tunerPermission:"Mikrofon izni verilmedi. Tarayıcı ayarlarından mikrofon erişimine izin verin.",
     tunerSecure:"Mikrofon için güvenli bağlantı gerekir. Dosyayı HTTPS üzerinden veya Android uygulamasında açın.",
@@ -1330,8 +1402,8 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     if ($("tuneStatus") && !tunerRunning) $("tuneStatus").textContent = tr("tunerWaiting");
     bpmSlider.setAttribute("aria-label",currentLanguage==="tr"?"Hız":currentLanguage==="en"?"Tempo":"Темп");
     bpmInput.setAttribute("aria-label",currentLanguage==="tr"?"BPM değeri":currentLanguage==="en"?"BPM value":"Значение BPM");
-    document.title = currentLanguage === "tr" ? "RockJazz Profesyonel Metronom V2.7 Test" :
-      currentLanguage === "en" ? "RockJazz Professional Metronome V2.7 Test" : "RockJazz Профессиональный метроном V2.7 Test";
+    document.title = currentLanguage === "tr" ? "RockJazz MetroTuner" :
+      currentLanguage === "en" ? "RockJazz MetroTuner — Metronome & Tuner" : "RockJazz MetroTuner — Метроном и тюнер";
   }
 
   const tempoTerms = [
@@ -1977,6 +2049,7 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
 
 
   $("openMusicGlossaryBtn").addEventListener("click",() => {
+    if (!demoProAccess) { openProModal("glossary"); return; }
     closeProModal();
     renderFullMusicGlossary();
     $("musicGlossaryOverlay").hidden = false;
@@ -1997,14 +2070,8 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   $("proModalBackdrop").addEventListener("click",closeProModal);
   $("monthlyPlanBtn").addEventListener("click",() => selectBillingPlan("monthly"));
   $("yearlyPlanBtn").addEventListener("click",() => selectBillingPlan("yearly"));
-  $("purchaseProBtn").addEventListener("click",() => {
-    $("statusText").textContent = tr("purchaseDemoMessage");
-  });
-  $("restorePurchasesBtn").addEventListener("click",() => {
-    $("statusText").textContent = tr("restoreDemoMessage");
-  });
-  $("demoProBtn").addEventListener("click",enableDemoPro);
-  $("disableDemoProBtn").addEventListener("click",disableDemoPro);
+  $("purchaseProBtn").addEventListener("click",() => { openAccountPanel(); });
+  $("restorePurchasesBtn").addEventListener("click",() => { openAccountPanel(); });
   document.addEventListener("keydown",event => {
     if (event.key === "Escape" && !$("proModal").hidden) closeProModal();
   });
@@ -2018,19 +2085,25 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   });
 
 
-  // --- Free / Pro product model (HTML preview only; no real billing here) ---
-  // V2.7 TEST BUILD: temporarily unlock every Pro feature for QA.
-  // Restore the Free/Pro entitlement check before publishing the commercial build.
-  let demoProAccess = true; // TEST BUILD: all Pro features stay unlocked by default until commercial release.
+  // --- Firebase license entitlement: starts locked until the signed-in user's license is verified. ---
+  let demoProAccess = false;
   let selectedBillingPlan = "yearly";
+  window.setMetroTunerProAccess = function(granted, details = {}) {
+    demoProAccess = Boolean(granted);
+    updatePlanUi();
+    const badge = $("accountProBadge");
+    if (badge) badge.textContent = demoProAccess ? "PRO • ETKİN" : "FREE";
+    const info = $("accountLicenseInfo");
+    if (info) info.textContent = details.message || (demoProAccess ? "Pro özellikleri lisansınızla açık." : "Ücretsiz erişim. Pro özellikleri lisans ile açılır.");
+  };
 
   function openProModal(reason = "") {
     $("proModalBackdrop").hidden = false;
     $("proModal").hidden = false;
     $("proModal").classList.add("visible");
     $("proModal").setAttribute("data-reason",reason);
-    $("disableDemoProBtn").hidden = !demoProAccess;
-    $("demoProBtn").hidden = demoProAccess;
+    $("disableDemoProBtn").hidden = true;
+    $("demoProBtn").hidden = true;
     const sampleBpm = [60,76,90,120,140,180];
     $("glossaryTempoSamples").innerHTML = sampleBpm.map(value => {
       const term = getTempoTerm(value);
@@ -2053,10 +2126,10 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   }
   function updatePlanUi() {
     document.body.classList.toggle("pro-demo",demoProAccess);
-    $("tunerPlanBadge").textContent = demoProAccess ? "TEST • TÜMÜ AÇIK" : "FREE";
-    $("topStatus").textContent = demoProAccess ? "TEST • TÜMÜ AÇIK" : (isPlaying ? tr("playing") : tr("ready"));
-    $("demoProBtn").hidden = demoProAccess;
-    $("disableDemoProBtn").hidden = !demoProAccess;
+    $("tunerPlanBadge").textContent = demoProAccess ? "PRO • ETKİN" : "FREE";
+    $("topStatus").textContent = demoProAccess ? "PRO • ETKİN" : (isPlaying ? tr("playing") : tr("ready"));
+    $("demoProBtn").hidden = true;
+    $("disableDemoProBtn").hidden = true;
     $("calibrationSlider").disabled = !demoProAccess;
     $("calibrationSlider").classList.toggle("locked-control",!demoProAccess);
     $("tunerLockLabel").textContent = demoProAccess ? "TÜM ARAÇLAR AÇIK" : "PRO";
@@ -2064,20 +2137,8 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
     renderTunerProfiles();
     renderTunerStrings();
   }
-  function enableDemoPro() {
-    demoProAccess = true;
-    try { localStorage.setItem("rockjazz-pro-preview","1"); } catch (_) {}
-    updatePlanUi();
-    closeProModal();
-    $("statusText").textContent = tr("demoEnabled");
-  }
-  function disableDemoPro() {
-    // Test build keeps all tools unlocked; this control cannot downgrade access.
-    demoProAccess = true;
-    updatePlanUi();
-    closeProModal();
-    $("statusText").textContent = "TEST SÜRÜMÜ: TÜM ÖZELLİKLER AÇIK";
-  }
+  function enableDemoPro() { $("statusText").textContent = "Pro erişimi yönetici lisansı ile etkinleştirilir."; }
+  function disableDemoPro() { $("statusText").textContent = "Pro erişimi hesap lisansına bağlıdır."; }
 
   // --- Chromatic tuner: microphone audio stays on-device ---
   const NOTE_NAMES = ["C","C♯","D","D♯","E","F","F♯","G","G♯","A","A♯","B"];
@@ -2638,5 +2699,225 @@ body.strobe-on .meter-pointer{filter:drop-shadow(0 0 6px #f4d17c)}
   applyLanguage("tr");
 })();
 </script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, collection, getDocs, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-functions.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB7EGPLLqQcEsgc4lkLFbQ5GjKycAFtEuk",
+  authDomain: "rockjazz-metrotuner.firebaseapp.com",
+  projectId: "rockjazz-metrotuner",
+  storageBucket: "rockjazz-metrotuner.firebasestorage.app",
+  messagingSenderId: "920739409326",
+  appId: "1:920739409326:web:991930d78aaa978b0b6c3f"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const functions = getFunctions(app, "europe-west1");
+const $ = id => document.getElementById(id);
+let currentUser = null;
+let profileUnsubscribe = null;
+let entitlementExpiryTimer = null;
+let isAdmin = false;
+let currentProfile = null;
+
+const showAccountPanel = () => {
+  $("accountBackdrop").hidden = false;
+  $("accountModal").hidden = false;
+};
+function closeAccountPanel() {
+  $("accountBackdrop").hidden = true;
+  $("accountModal").hidden = true;
+}
+window.openAccountPanel = showAccountPanel;
+$("openAccountBtn").addEventListener("click", showAccountPanel);
+$("closeAccountBtn").addEventListener("click", closeAccountPanel);
+$("accountBackdrop").addEventListener("click", closeAccountPanel);
+
+function setMessage(id, message, isError=false) {
+  const el = $(id); if (!el) return;
+  el.textContent = message || "";
+  el.style.color = isError ? "#f0a49a" : "#aebbd0";
+}
+function friendlyError(error) {
+  const code = error?.code || "";
+  const messages = {
+    "auth/invalid-credential":"E-posta veya şifre hatalı.",
+    "auth/email-already-in-use":"Bu e-posta adresi zaten kayıtlı.",
+    "auth/weak-password":"Şifre en az 6 karakter olmalı.",
+    "auth/invalid-email":"E-posta adresini kontrol et.",
+    "auth/too-many-requests":"Çok fazla deneme yapıldı. Bir süre sonra yeniden dene.",
+    "auth/network-request-failed":"İnternet bağlantısını kontrol et.",
+    "permission-denied":"Firestore yetkisi reddetti. Güvenlik kurallarını kontrol et.",
+    "functions/not-found":"Cloud Functions henüz bu Firebase projesine dağıtılmamış.",
+    "functions/failed-precondition":"Firebase tarafındaki kurulum adımlarını tamamla.",
+    "functions/unauthenticated":"Önce hesabına giriş yap.",
+    "functions/permission-denied":"Bu işlem için yönetici yetkisi gerekiyor."
+  };
+  return messages[code] || error?.message || "İşlem tamamlanamadı.";
+}
+async function ensureProfile(user) {
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) {
+    await setDoc(ref, {
+      uid: user.uid,
+      email: user.email || "",
+      displayName: user.displayName || "",
+      createdAt: serverTimestamp()
+    });
+  } else if (!snap.data().displayName && user.displayName) {
+    await updateDoc(ref, { displayName: user.displayName });
+  }
+}
+function entitlementFromProfile(data) {
+  const pro = data?.pro || {};
+  if (!pro.active) return false;
+  if (!pro.expiresAt) return true;
+  const expiry = typeof pro.expiresAt.toDate === "function" ? pro.expiresAt.toDate().getTime() : new Date(pro.expiresAt).getTime();
+  return Number.isFinite(expiry) && expiry > Date.now();
+}
+function renderUserState(user, data) {
+  const signedIn = Boolean(user);
+  $("authPanel").hidden = signedIn;
+  $("signedInPanel").hidden = !signedIn;
+  $("redeemPanel").hidden = !signedIn;
+  $("adminPanel").hidden = !(signedIn && isAdmin);
+  if (!signedIn) {
+    $("adminPanel").hidden = true;
+    window.setMetroTunerProAccess?.(false, {message:"Giriş yapılmadı. Pro lisansı kontrol edilemiyor."});
+    return;
+  }
+  const active = entitlementFromProfile(data);
+  if (entitlementExpiryTimer) clearTimeout(entitlementExpiryTimer);
+  const expiresAtValue = data?.pro?.expiresAt;
+  if (active && expiresAtValue?.toDate) {
+    const remaining = expiresAtValue.toDate().getTime() - Date.now();
+    if (remaining > 0) entitlementExpiryTimer = setTimeout(() => window.setMetroTunerProAccess?.(false, {message:"Pro lisans süresi doldu."}), Math.min(remaining, 2147480000));
+  }
+  $("accountDisplayName").textContent = user.displayName || data?.displayName || "MetroTuner kullanıcısı";
+  $("accountEmailLabel").textContent = user.email || "";
+  $("accountProBadge").textContent = active ? "PRO • ETKİN" : "FREE";
+  $("accountProBadge").classList.toggle("pro", active);
+  let licenseText = active ? "Pro özellikleri hesabında etkin." : "Ücretsiz hesap. Aktivasyon kodu girerek Pro'yu açabilirsin.";
+  const exp = data?.pro?.expiresAt;
+  if (active && exp?.toDate) licenseText += `\nBitiş: ${exp.toDate().toLocaleDateString()}`;
+  else if (active && !exp) licenseText += "\nLisans: Süresiz";
+  $("accountLicenseInfo").textContent = licenseText;
+  window.setMetroTunerProAccess?.(active, {message:licenseText});
+}
+
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if (profileUnsubscribe) { profileUnsubscribe(); profileUnsubscribe = null; }
+  isAdmin = false;
+  currentProfile = null;
+  if (!user) { renderUserState(null, null); return; }
+  try {
+    await ensureProfile(user);
+    const profileRef = doc(db, "users", user.uid);
+    profileUnsubscribe = onSnapshot(profileRef, snap => {
+      currentProfile = snap.exists() ? snap.data() : null;
+      isAdmin = currentProfile?.role === "admin";
+      renderUserState(user, currentProfile);
+      if (isAdmin) refreshAdminUsers();
+    }, error => setMessage("authMessage", friendlyError(error), true));
+  } catch (error) {
+    setMessage("authMessage", friendlyError(error), true);
+    window.setMetroTunerProAccess?.(false);
+  }
+});
+
+$("registerAccountBtn").addEventListener("click", async () => {
+  const email = $("accountEmail").value.trim();
+  const password = $("accountPassword").value;
+  const name = $("accountName").value.trim();
+  if (!name) return setMessage("authMessage", "Kayıt için adını yaz.", true);
+  try {
+    setMessage("authMessage", "Hesap oluşturuluyor…");
+    const credential = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(credential.user, {displayName:name});
+    await ensureProfile(credential.user);
+    setMessage("authMessage", "Hesabın oluşturuldu. Şimdi lisans durumun kontrol ediliyor.");
+  } catch (error) { setMessage("authMessage", friendlyError(error), true); }
+});
+$("loginAccountBtn").addEventListener("click", async () => {
+  try {
+    setMessage("authMessage", "Giriş yapılıyor…");
+    await signInWithEmailAndPassword(auth, $("accountEmail").value.trim(), $("accountPassword").value);
+    setMessage("authMessage", "Giriş başarılı.");
+  } catch (error) { setMessage("authMessage", friendlyError(error), true); }
+});
+$("logoutAccountBtn").addEventListener("click", async () => {
+  try { await signOut(auth); setMessage("authMessage", "Çıkış yapıldı."); }
+  catch (error) { setMessage("authMessage", friendlyError(error), true); }
+});
+
+$("redeemLicenseBtn").addEventListener("click", async () => {
+  const code = $("licenseCodeInput").value.trim().toUpperCase();
+  if (!currentUser) return setMessage("redeemMessage", "Önce giriş yap.", true);
+  if (!code) return setMessage("redeemMessage", "Aktivasyon kodunu gir.", true);
+  try {
+    setMessage("redeemMessage", "Lisans doğrulanıyor…");
+    const redeem = httpsCallable(functions, "redeemLicense");
+    const result = await redeem({code});
+    $("licenseCodeInput").value = "";
+    setMessage("redeemMessage", result.data?.message || "Pro lisansı etkinleştirildi.");
+  } catch (error) { setMessage("redeemMessage", friendlyError(error), true); }
+});
+
+$("createLicenseCodeBtn").addEventListener("click", async () => {
+  if (!isAdmin) return setMessage("adminMessage", "Yönetici yetkisi gerekli.", true);
+  try {
+    setMessage("createdCodeMessage", "Kod hazırlanıyor…");
+    const createCode = httpsCallable(functions, "createLicenseCode");
+    const durationDays = Number($("licenseDuration").value);
+    const result = await createCode({durationDays: durationDays || null});
+    const code = result.data?.code;
+    setMessage("createdCodeMessage", `Oluşturulan tek kullanımlık kod: ${code}\nBu kodu kullanıcıya gönder. Güvenlik için kod tekrar gösterilmez.`);
+  } catch (error) { setMessage("createdCodeMessage", friendlyError(error), true); }
+});
+
+async function refreshAdminUsers() {
+  if (!isAdmin) return;
+  const list = $("adminUsersList");
+  list.replaceChildren();
+  try {
+    const usersQuery = query(collection(db, "users"), orderBy("createdAt", "desc"), limit(100));
+    const snapshot = await getDocs(usersQuery);
+    if (snapshot.empty) { list.textContent = "Henüz kayıtlı kullanıcı yok."; return; }
+    snapshot.forEach(userDoc => {
+      const u = userDoc.data();
+      const row = document.createElement("div"); row.className = "account-user";
+      const details = document.createElement("div");
+      const title = document.createElement("b"); title.textContent = u.displayName || "İsimsiz kullanıcı";
+      const sub = document.createElement("small"); sub.textContent = `${u.email || "E-posta yok"} · ${userDoc.id}`;
+      const status = document.createElement("small"); status.textContent = u.role === "admin" ? "YÖNETİCİ" : (entitlementFromProfile(u) ? "PRO ETKİN" : "FREE");
+      details.append(title, sub, status);
+      const action = document.createElement("button");
+      const active = entitlementFromProfile(u);
+      action.textContent = active ? "Pro'yu kapat" : "Pro ver";
+      action.addEventListener("click", async () => {
+        try {
+          action.disabled = true;
+          const setUserPro = httpsCallable(functions, "setUserPro");
+          await setUserPro({uid:userDoc.id, active:!active, durationDays:Number($("adminGrantDuration").value) || null});
+          setMessage("adminMessage", `${u.email || userDoc.id}: ${!active ? "Pro etkinleştirildi." : "Pro erişimi kapatıldı."}`);
+          await refreshAdminUsers();
+        } catch (error) { action.disabled = false; setMessage("adminMessage", friendlyError(error), true); }
+      });
+      row.append(details, action); list.append(row);
+    });
+    setMessage("adminMessage", `${snapshot.size} kullanıcı listelendi (en fazla 100).`);
+  } catch (error) { setMessage("adminMessage", friendlyError(error), true); }
+}
+$("refreshUsersBtn").addEventListener("click", refreshAdminUsers);
+</script>
+
 </body>
 </html>
